@@ -1046,3 +1046,134 @@
                 t += this._time - _),
                 i = v,
                 f = this._start,
+                u = !(l = this._ts),
+                y && (g || (_ = this._zTime),
+                !t && e || (this._zTime = t)),
+                this._repeat) {
+                    if (p = this._yoyo,
+                    o = g + this._rDelay,
+                    this._repeat < -1 && t < 0)
+                        return this.totalTime(100 * o + t, e, r);
+                    if (i = da(v % o),
+                    v === m ? (s = this._repeat,
+                    i = g) : ((s = ~~(v / o)) && s === v / o && (i = g,
+                    s--),
+                    g < i && (i = g)),
+                    d = gt(this._tTime, o),
+                    !_ && this._tTime && d !== s && (d = s),
+                    p && 1 & s && (i = g - i,
+                    c = 1),
+                    s !== d && !this._lock) {
+                        var b = p && 1 & d
+                          , T = b === (p && 1 & s);
+                        if (s < d && (b = !b),
+                        _ = b ? 0 : g,
+                        this._lock = 1,
+                        this.render(_ || (c ? 0 : da(s * o)), e, !g)._lock = 0,
+                        this._tTime = v,
+                        !e && this.parent && Mt(this, "onRepeat"),
+                        this.vars.repeatRefresh && !c && (this.invalidate()._lock = 1),
+                        _ && _ !== this._time || u != !this._ts || this.vars.onRepeat && !this.parent && !this._act)
+                            return this;
+                        if (g = this._dur,
+                        m = this._tDur,
+                        T && (this._lock = 2,
+                        _ = b ? g : -1e-4,
+                        this.render(_, !0),
+                        this.vars.repeatRefresh && !c && this.invalidate()),
+                        this._lock = 0,
+                        !this._ts && !u)
+                            return this;
+                        Hb(this, c)
+                    }
+                }
+                if (this._hasPause && !this._forcing && this._lock < 2 && (h = function _findNextPauseTween(t, e, r) {
+                    var i;
+                    if (e < r)
+                        for (i = t._first; i && i._start <= r; ) {
+                            if ("isPause" === i.data && i._start > e)
+                                return i;
+                            i = i._next
+                        }
+                    else
+                        for (i = t._last; i && i._start >= r; ) {
+                            if ("isPause" === i.data && i._start < e)
+                                return i;
+                            i = i._prev
+                        }
+                }(this, da(_), da(i))) && (v -= i - (i = h._start)),
+                this._tTime = v,
+                this._time = i,
+                this._act = !l,
+                this._initted || (this._onUpdate = this.vars.onUpdate,
+                this._initted = 1,
+                this._zTime = t,
+                _ = 0),
+                !_ && i && !e && (Mt(this, "onStart"),
+                this._tTime !== v))
+                    return this;
+                if (_ <= i && 0 <= t)
+                    for (n = this._first; n; ) {
+                        if (a = n._next,
+                        (n._act || i >= n._start) && n._ts && h !== n) {
+                            if (n.parent !== this)
+                                return this.render(t, e, r);
+                            if (n.render(0 < n._ts ? (i - n._start) * n._ts : (n._dirty ? n.totalDuration() : n._tDur) + (i - n._start) * n._ts, e, r),
+                            i !== this._time || !this._ts && !u) {
+                                h = 0,
+                                a && (v += this._zTime = -X);
+                                break
+                            }
+                        }
+                        n = a
+                    }
+                else {
+                    n = this._last;
+                    for (var w = t < 0 ? t : i; n; ) {
+                        if (a = n._prev,
+                        (n._act || w <= n._end) && n._ts && h !== n) {
+                            if (n.parent !== this)
+                                return this.render(t, e, r);
+                            if (n.render(0 < n._ts ? (w - n._start) * n._ts : (n._dirty ? n.totalDuration() : n._tDur) + (w - n._start) * n._ts, e, r),
+                            i !== this._time || !this._ts && !u) {
+                                h = 0,
+                                a && (v += this._zTime = w ? -X : X);
+                                break
+                            }
+                        }
+                        n = a
+                    }
+                }
+                if (h && !e && (this.pause(),
+                h.render(_ <= i ? 0 : -X)._zTime = _ <= i ? 1 : -1,
+                this._ts))
+                    return this._start = f,
+                    za(this),
+                    this.render(t, e, r);
+                this._onUpdate && !e && Mt(this, "onUpdate", !0),
+                (v === m && m >= this.totalDuration() || !v && _) && (f !== this._start && Math.abs(l) === Math.abs(this._ts) || this._lock || (!t && g || !(v === m && 0 < this._ts || !v && this._ts < 0) || sa(this, 1),
+                e || t < 0 && !_ || !v && !_ && m || (Mt(this, v === m && 0 <= t ? "onComplete" : "onReverseComplete", !0),
+                !this._prom || v < m && 0 < this.timeScale() || this._prom())))
+            }
+            return this
+        }
+        ,
+        e.add = function add(t, e) {
+            var r = this;
+            if (q(e) || (e = bt(this, e, t)),
+            !(t instanceof qt)) {
+                if (W(t))
+                    return t.forEach(function(t) {
+                        return r.add(t, e)
+                    }),
+                    this;
+                if (o(t))
+                    return this.addLabel(t, e);
+                if (!p(t))
+                    return this;
+                t = Jt.delayedCall(0, t)
+            }
+            return this !== t ? Ca(this, t, e) : this
+        }
+        ,
+        e.getChildren = function getChildren(t, e, r, i) {
