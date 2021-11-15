@@ -1308,3 +1308,134 @@
         e.invalidate = function invalidate() {
             var t = this._first;
             for (this._lock = 0; t; )
+                t.invalidate(),
+                t = t._next;
+            return n.prototype.invalidate.call(this)
+        }
+        ,
+        e.clear = function clear(t) {
+            void 0 === t && (t = !0);
+            for (var e, r = this._first; r; )
+                e = r._next,
+                this.remove(r),
+                r = e;
+            return this._dp && (this._time = this._tTime = this._pTime = 0),
+            t && (this.labels = {}),
+            ta(this)
+        }
+        ,
+        e.totalDuration = function totalDuration(t) {
+            var e, r, i, n = 0, a = this, s = a._last, o = j;
+            if (arguments.length)
+                return a.timeScale((a._repeat < 0 ? a.duration() : a.totalDuration()) / (a.reversed() ? -t : t));
+            if (a._dirty) {
+                for (i = a.parent; s; )
+                    e = s._prev,
+                    s._dirty && s.totalDuration(),
+                    o < (r = s._start) && a._sort && s._ts && !a._lock ? (a._lock = 1,
+                    Ca(a, s, r - s._delay, 1)._lock = 0) : o = r,
+                    r < 0 && s._ts && (n -= r,
+                    (!i && !a._dp || i && i.smoothChildTiming) && (a._start += r / a._ts,
+                    a._time -= r,
+                    a._tTime -= r),
+                    a.shiftChildren(-r, !1, -Infinity),
+                    o = 0),
+                    s._end > n && s._ts && (n = s._end),
+                    s = e;
+                Ja(a, a === I && a._time > n ? a._time : n, 1, 1),
+                a._dirty = 0
+            }
+            return a._tDur
+        }
+        ,
+        Timeline.updateRoot = function updateRoot(t) {
+            if (I._ts && (ga(I, ya(t, I)),
+            f = St.frame),
+            St.frame >= pt) {
+                pt += Y.autoSleep || 120;
+                var e = I._first;
+                if ((!e || !e._ts) && Y.autoSleep && St._listeners.length < 2) {
+                    for (; e && !e._ts; )
+                        e = e._next;
+                    e || St.sleep()
+                }
+            }
+        }
+        ,
+        Timeline
+    }(qt);
+    ja(Nt.prototype, {
+        _lock: 0,
+        _hasPause: 0,
+        _forcing: 0
+    });
+    function Tb(t, e, r, i, n, a) {
+        var u, h, l, f;
+        if (ft[t] && !1 !== (u = new ft[t]).init(n, u.rawVars ? e[t] : function _processVars(t, e, r, i, n) {
+            if (p(t) && (t = Xt(t, n, e, r, i)),
+            !s(t) || t.style && t.nodeType || W(t) || H(t))
+                return o(t) ? Xt(t, n, e, r, i) : t;
+            var a, u = {};
+            for (a in t)
+                u[a] = Xt(t[a], n, e, r, i);
+            return u
+        }(e[t], i, n, a, r), r, i, a) && (r._pt = h = new ae(r._pt,n,t,0,1,u.render,u,0,u.priority),
+        r !== d))
+            for (l = r._ptLookup[r._targets.indexOf(n)],
+            f = u._props.length; f--; )
+                l[u._props[f]] = h;
+        return u
+    }
+    function Xb(t, r, e, i) {
+        var n, a, s = r.ease || i || "power1.inOut";
+        if (W(r))
+            a = e[t] || (e[t] = []),
+            r.forEach(function(t, e) {
+                return a.push({
+                    t: e / (r.length - 1) * 100,
+                    v: t,
+                    e: s
+                })
+            });
+        else
+            for (n in r)
+                a = e[n] || (e[n] = []),
+                "ease" === n || a.push({
+                    t: parseFloat(t),
+                    v: r[n],
+                    e: s
+                })
+    }
+    var Qt, Yt = function _addPropTween(t, e, r, i, n, a, s, u, h) {
+        p(i) && (i = i(n || 0, t, a));
+        var l, f = t[e], d = "get" !== r ? r : p(f) ? h ? t[e.indexOf("set") || !p(t["get" + e.substr(3)]) ? e : "get" + e.substr(3)](h) : t[e]() : f, c = p(f) ? h ? Zt : $t : Gt;
+        if (o(i) && (~i.indexOf("random(") && (i = gb(i)),
+        "=" === i.charAt(1) && (!(l = parseFloat(d) + parseFloat(i.substr(2)) * ("-" === i.charAt(0) ? -1 : 1) + (Qa(d) || 0)) && 0 !== l || (i = l))),
+        d !== i)
+            return isNaN(d * i) || "" === i ? (f || e in t || N(e, i),
+            function _addComplexStringPropTween(t, e, r, i, n, a, s) {
+                var o, u, h, l, f, d, p, c, _ = new ae(this._pt,t,e,0,1,te,null,n), m = 0, g = 0;
+                for (_.b = r,
+                _.e = i,
+                r += "",
+                (p = ~(i += "").indexOf("random(")) && (i = gb(i)),
+                a && (a(c = [r, i], t, e),
+                r = c[0],
+                i = c[1]),
+                u = r.match(it) || []; o = it.exec(i); )
+                    l = o[0],
+                    f = i.substring(m, o.index),
+                    h ? h = (h + 1) % 5 : "rgba(" === f.substr(-5) && (h = 1),
+                    l !== u[g++] && (d = parseFloat(u[g - 1]) || 0,
+                    _._pt = {
+                        _next: _._pt,
+                        p: f || 1 === g ? f : ",",
+                        s: d,
+                        c: "=" === l.charAt(1) ? parseFloat(l.substr(2)) * ("-" === l.charAt(0) ? -1 : 1) : parseFloat(l) - d,
+                        m: h && h < 4 ? Math.round : 0
+                    },
+                    m = it.lastIndex);
+                return _.c = m < i.length ? i.substring(m, i.length) : "",
+                _.fp = s,
+                (nt.test(i) || p) && (_.e = 0),
+                this._pt = _
