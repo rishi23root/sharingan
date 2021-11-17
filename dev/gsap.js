@@ -1570,3 +1570,134 @@
                         o.to(d, h, p ? p(u, d, P) : 0),
                         o._ease = zt.none;
                     o.duration() ? m = g = 0 : a.timeline = 0
+                } else if (w) {
+                    oa(ja(o.vars.defaults, {
+                        ease: "none"
+                    })),
+                    o._ease = Rt(w.ease || r.ease || "none");
+                    var A, S, D, z = 0;
+                    if (W(w))
+                        w.forEach(function(t) {
+                            return o.to(P, t, ">")
+                        });
+                    else {
+                        for (f in h = {},
+                        w)
+                            "ease" === f || "easeEach" === f || Xb(f, w[f], h, w.easeEach);
+                        for (f in h)
+                            for (A = h[f].sort(function(t, e) {
+                                return t.t - e.t
+                            }),
+                            u = z = 0; u < A.length; u++)
+                                (D = {
+                                    ease: (S = A[u]).e,
+                                    duration: (S.t - (u ? A[u - 1].t : 0)) / 100 * m
+                                })[f] = S.v,
+                                o.to(P, D, z),
+                                z += D.duration;
+                        o.duration() < m && o.to({}, {
+                            duration: m - o.duration()
+                        })
+                    }
+                }
+                m || a.duration(m = o.duration())
+            } else
+                a.timeline = 0;
+            return !0 !== T || R || (Qt = _assertThisInitialized(a),
+            I.killTweensOf(P),
+            Qt = 0),
+            Ca(C, _assertThisInitialized(a), i),
+            r.reversed && a.reverse(),
+            r.paused && a.paused(!0),
+            (y || !m && !w && a._start === da(C._time) && t(y) && function _hasNoPausedAncestors(t) {
+                return !t || t._ts && _hasNoPausedAncestors(t.parent)
+            }(_assertThisInitialized(a)) && "nested" !== C.data) && (a._tTime = -X,
+            a.render(Math.max(0, -g))),
+            M && Da(_assertThisInitialized(a), M),
+            a
+        }
+        _inheritsLoose(Tween, F);
+        var e = Tween.prototype;
+        return e.render = function render(t, e, r) {
+            var i, n, a, s, o, u, h, l, f, d = this._time, p = this._tDur, c = this._dur, _ = p - X < t && 0 <= t ? p : t < X ? 0 : t;
+            if (c) {
+                if (_ !== this._tTime || !t || r || !this._initted && this._tTime || this._startAt && this._zTime < 0 != t < 0) {
+                    if (i = _,
+                    l = this.timeline,
+                    this._repeat) {
+                        if (s = c + this._rDelay,
+                        this._repeat < -1 && t < 0)
+                            return this.totalTime(100 * s + t, e, r);
+                        if (i = da(_ % s),
+                        _ === p ? (a = this._repeat,
+                        i = c) : ((a = ~~(_ / s)) && a === _ / s && (i = c,
+                        a--),
+                        c < i && (i = c)),
+                        (u = this._yoyo && 1 & a) && (f = this._yEase,
+                        i = c - i),
+                        o = gt(this._tTime, s),
+                        i === d && !r && this._initted)
+                            return this;
+                        a !== o && (l && this._yEase && Hb(l, u),
+                        !this.vars.repeatRefresh || u || this._lock || (this._lock = r = 1,
+                        this.render(da(s * a), !0).invalidate()._lock = 0))
+                    }
+                    if (!this._initted) {
+                        if (Ea(this, t < 0 ? t : i, r, e))
+                            return this._tTime = 0,
+                            this;
+                        if (c !== this._dur)
+                            return this.render(t, e, r)
+                    }
+                    if (this._tTime = _,
+                    this._time = i,
+                    !this._act && this._ts && (this._act = 1,
+                    this._lazy = 0),
+                    this.ratio = h = (f || this._ease)(i / c),
+                    this._from && (this.ratio = h = 1 - h),
+                    i && !d && !e && (Mt(this, "onStart"),
+                    this._tTime !== _))
+                        return this;
+                    for (n = this._pt; n; )
+                        n.r(h, n.d),
+                        n = n._next;
+                    l && l.render(t < 0 ? t : !i && u ? -X : l._dur * l._ease(i / this._dur), e, r) || this._startAt && (this._zTime = t),
+                    this._onUpdate && !e && (t < 0 && this._startAt && this._startAt.render(t, !0, r),
+                    Mt(this, "onUpdate")),
+                    this._repeat && a !== o && this.vars.onRepeat && !e && this.parent && Mt(this, "onRepeat"),
+                    _ !== this._tDur && _ || this._tTime !== _ || (t < 0 && this._startAt && !this._onUpdate && this._startAt.render(t, !0, !0),
+                    !t && c || !(_ === this._tDur && 0 < this._ts || !_ && this._ts < 0) || sa(this, 1),
+                    e || t < 0 && !d || !_ && !d || (Mt(this, _ === p ? "onComplete" : "onReverseComplete", !0),
+                    !this._prom || _ < p && 0 < this.timeScale() || this._prom()))
+                }
+            } else
+                !function _renderZeroDurationTween(t, e, r, i) {
+                    var n, a, s, o = t.ratio, u = e < 0 || !e && (!t._start && function _parentPlayheadIsBeforeStart(t) {
+                        var e = t.parent;
+                        return e && e._ts && e._initted && !e._lock && (e.rawTime() < 0 || _parentPlayheadIsBeforeStart(e))
+                    }(t) && (t._initted || !vt(t)) || (t._ts < 0 || t._dp._ts < 0) && !vt(t)) ? 0 : 1, h = t._rDelay, l = 0;
+                    if (h && t._repeat && (l = Tt(0, t._tDur, e),
+                    a = gt(l, h),
+                    t._yoyo && 1 & a && (u = 1 - u),
+                    a !== gt(t._tTime, h) && (o = 1 - u,
+                    t.vars.repeatRefresh && t._initted && t.invalidate())),
+                    u !== o || i || t._zTime === X || !e && t._zTime) {
+                        if (!t._initted && Ea(t, e, i, r))
+                            return;
+                        for (s = t._zTime,
+                        t._zTime = e || (r ? X : 0),
+                        r = r || e && !s,
+                        t.ratio = u,
+                        t._from && (u = 1 - u),
+                        t._time = 0,
+                        t._tTime = l,
+                        n = t._pt; n; )
+                            n.r(u, n.d),
+                            n = n._next;
+                        t._startAt && e < 0 && t._startAt.render(e, !0, !0),
+                        t._onUpdate && !r && Mt(t, "onUpdate"),
+                        l && t._repeat && !r && t.parent && Mt(t, "onRepeat"),
+                        (e >= t._tDur || e < 0) && t.ratio === u && (u && sa(t, 1),
+                        r || (Mt(t, u ? "onComplete" : "onReverseComplete", !0),
+                        t._prom && t._prom()))
+                    } else
