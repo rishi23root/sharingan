@@ -1701,3 +1701,134 @@
                         r || (Mt(t, u ? "onComplete" : "onReverseComplete", !0),
                         t._prom && t._prom()))
                     } else
+                        t._zTime || (t._zTime = e)
+                }(this, t, e, r);
+            return this
+        }
+        ,
+        e.targets = function targets() {
+            return this._targets
+        }
+        ,
+        e.invalidate = function invalidate() {
+            return this._pt = this._op = this._startAt = this._onUpdate = this._lazy = this.ratio = 0,
+            this._ptLookup = [],
+            this.timeline && this.timeline.invalidate(),
+            F.prototype.invalidate.call(this)
+        }
+        ,
+        e.kill = function kill(t, e) {
+            if (void 0 === e && (e = "all"),
+            !(t || e && "all" !== e))
+                return this._lazy = this._pt = 0,
+                this.parent ? lb(this) : this;
+            if (this.timeline) {
+                var r = this.timeline.totalDuration();
+                return this.timeline.killTweensOf(t, e, Qt && !0 !== Qt.vars.overwrite)._first || lb(this),
+                this.parent && r !== this.timeline.totalDuration() && Ja(this, this._dur * this.timeline._tDur / r, 0, 1),
+                this
+            }
+            var i, n, a, s, u, h, l, f = this._targets, d = t ? xt(t) : f, p = this._ptLookup, c = this._pt;
+            if ((!e || "all" === e) && function _arraysMatch(t, e) {
+                for (var r = t.length, i = r === e.length; i && r-- && t[r] === e[r]; )
+                    ;
+                return r < 0
+            }(f, d))
+                return "all" === e && (this._pt = 0),
+                lb(this);
+            for (i = this._op = this._op || [],
+            "all" !== e && (o(e) && (u = {},
+            ba(e, function(t) {
+                return u[t] = 1
+            }),
+            e = u),
+            e = function _addAliasesToVars(t, e) {
+                var r, i, n, a, s = t[0] ? _(t[0]).harness : 0, o = s && s.aliases;
+                if (!o)
+                    return e;
+                for (i in r = mt({}, e),
+                o)
+                    if (i in r)
+                        for (n = (a = o[i].split(",")).length; n--; )
+                            r[a[n]] = r[i];
+                return r
+            }(f, e)),
+            l = f.length; l--; )
+                if (~d.indexOf(f[l]))
+                    for (u in n = p[l],
+                    "all" === e ? (i[l] = e,
+                    s = n,
+                    a = {}) : (a = i[l] = i[l] || {},
+                    s = e),
+                    s)
+                        (h = n && n[u]) && ("kill"in h.d && !0 !== h.d.kill(u) || ra(this, h, "_pt"),
+                        delete n[u]),
+                        "all" !== a && (a[u] = 1);
+            return this._initted && !this._pt && c && lb(this),
+            this
+        }
+        ,
+        Tween.to = function to(t, e, r) {
+            return new Tween(t,e,r)
+        }
+        ,
+        Tween.from = function from(t, e) {
+            return Na(1, arguments)
+        }
+        ,
+        Tween.delayedCall = function delayedCall(t, e, r, i) {
+            return new Tween(e,0,{
+                immediateRender: !1,
+                lazy: !1,
+                overwrite: !1,
+                delay: t,
+                onComplete: e,
+                onReverseComplete: e,
+                onCompleteParams: r,
+                onReverseCompleteParams: r,
+                callbackScope: i
+            })
+        }
+        ,
+        Tween.fromTo = function fromTo(t, e, r) {
+            return Na(2, arguments)
+        }
+        ,
+        Tween.set = function set(t, e) {
+            return e.duration = 0,
+            e.repeatDelay || (e.repeat = 0),
+            new Tween(t,e)
+        }
+        ,
+        Tween.killTweensOf = function killTweensOf(t, e, r) {
+            return I.killTweensOf(t, e, r)
+        }
+        ,
+        Tween
+    }(qt);
+    ja(Jt.prototype, {
+        _targets: [],
+        _lazy: 0,
+        _startAt: 0,
+        _op: 0,
+        _onInit: 0
+    }),
+    ba("staggerTo,staggerFrom,staggerFromTo", function(r) {
+        Jt[r] = function() {
+            var t = new Nt
+              , e = wt.call(arguments, 0);
+            return e.splice("staggerFromTo" === r ? 5 : 4, 0, 0),
+            t[r].apply(t, e)
+        }
+    });
+    function dc(t, e, r) {
+        return t.setAttribute(e, r)
+    }
+    function lc(t, e, r, i) {
+        i.mSet(t, e, i.m.call(i.tween, r, i.mt), i)
+    }
+    var Gt = function _setterPlain(t, e, r) {
+        return t[e] = r
+    }
+      , $t = function _setterFunc(t, e, r) {
+        return t[e](r)
