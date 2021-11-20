@@ -1963,3 +1963,134 @@
                     P(e, i),
                     t.register && t.register(oe, i, ae)
                 }(t)
+            })
+        },
+        timeline: function timeline(t) {
+            return new Nt(t)
+        },
+        getTweensOf: function getTweensOf(t, e) {
+            return I.getTweensOf(t, e)
+        },
+        getProperty: function getProperty(i, t, e, r) {
+            o(i) && (i = xt(i)[0]);
+            var n = _(i || {}).get
+              , a = e ? ia : ha;
+            return "native" === e && (e = ""),
+            i ? t ? a((ft[t] && ft[t].get || n)(i, t, e, r)) : function(t, e, r) {
+                return a((ft[t] && ft[t].get || n)(i, t, e, r))
+            }
+            : i
+        },
+        quickSetter: function quickSetter(r, e, i) {
+            if (1 < (r = xt(r)).length) {
+                var n = r.map(function(t) {
+                    return oe.quickSetter(t, e, i)
+                })
+                  , a = n.length;
+                return function(t) {
+                    for (var e = a; e--; )
+                        n[e](t)
+                }
+            }
+            r = r[0] || {};
+            var s = ft[e]
+              , o = _(r)
+              , u = o.harness && (o.harness.aliases || {})[e] || e
+              , h = s ? function(t) {
+                var e = new s;
+                d._pt = 0,
+                e.init(r, i ? t + i : t, d, 0, [r]),
+                e.render(1, e),
+                d._pt && ee(1, d)
+            }
+            : o.set(r, u);
+            return s ? h : function(t) {
+                return h(r, u, i ? t + i : t, o, 1)
+            }
+        },
+        isTweening: function isTweening(t) {
+            return 0 < I.getTweensOf(t, !0).length
+        },
+        defaults: function defaults(t) {
+            return t && t.ease && (t.ease = Rt(t.ease, L.ease)),
+            ma(L, t || {})
+        },
+        config: function config(t) {
+            return ma(Y, t || {})
+        },
+        registerEffect: function registerEffect(t) {
+            var i = t.name
+              , n = t.effect
+              , e = t.plugins
+              , a = t.defaults
+              , r = t.extendTimeline;
+            (e || "").split(",").forEach(function(t) {
+                return t && !ft[t] && !ot[t] && O(i + " effect requires " + t + " plugin.")
+            }),
+            dt[i] = function(t, e, r) {
+                return n(xt(t), ja(e || {}, a), r)
+            }
+            ,
+            r && (Nt.prototype[i] = function(t, e, r) {
+                return this.add(dt[i](t, s(e) ? e : (r = e) && {}, this), r)
+            }
+            )
+        },
+        registerEase: function registerEase(t, e) {
+            zt[t] = Rt(e)
+        },
+        parseEase: function parseEase(t, e) {
+            return arguments.length ? Rt(t, e) : zt
+        },
+        getById: function getById(t) {
+            return I.getById(t)
+        },
+        exportRoot: function exportRoot(e, r) {
+            void 0 === e && (e = {});
+            var i, n, a = new Nt(e);
+            for (a.smoothChildTiming = t(e.smoothChildTiming),
+            I.remove(a),
+            a._dp = 0,
+            a._time = a._tTime = I._time,
+            i = I._first; i; )
+                n = i._next,
+                !r && !i._dur && i instanceof Jt && i.vars.onComplete === i._targets[0] || Ca(a, i, i._start - i._delay),
+                i = n;
+            return Ca(I, a, 0),
+            a
+        },
+        utils: {
+            wrap: function wrap(e, t, r) {
+                var i = t - e;
+                return W(e) ? db(e, wrap(0, e.length), t) : Oa(r, function(t) {
+                    return (i + (t - e) % i) % i + e
+                })
+            },
+            wrapYoyo: function wrapYoyo(e, t, r) {
+                var i = t - e
+                  , n = 2 * i;
+                return W(e) ? db(e, wrapYoyo(0, e.length - 1), t) : Oa(r, function(t) {
+                    return e + (i < (t = (n + (t - e) % n) % n || 0) ? n - t : t)
+                })
+            },
+            distribute: Ya,
+            random: _a,
+            snap: $a,
+            normalize: function normalize(t, e, r) {
+                return Ot(t, e, 0, 1, r)
+            },
+            getUnit: Qa,
+            clamp: function clamp(e, r, t) {
+                return Oa(t, function(t) {
+                    return Tt(e, r, t)
+                })
+            },
+            splitColor: rb,
+            toArray: xt,
+            selector: function selector(r) {
+                return r = xt(r)[0] || O("Invalid scope") || {},
+                function(t) {
+                    var e = r.current || r.nativeElement || r;
+                    return xt(t, e.querySelectorAll ? e : e === r ? O("Invalid scope") || a.createElement("div") : r)
+                }
+            },
