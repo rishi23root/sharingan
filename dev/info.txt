@@ -1,0 +1,70 @@
+// kute js 
+setTimeout(() => {
+  KUTE.fromTo('#starting0', { path: starting },{ path: middle1 }, { path: supperBig }, { path: middle2 },{ path: starting },).start();
+  KUTE.fromTo('#starting1', { path: starting },{ path: middle1 }, { path: supperBig }, { path: middle2 },{ path: starting },).start();
+}, 1000);
+
+
+
+
+// snap
+// var svg = document.getElementById("eye");
+// var s = Snap(svg);
+
+// var startingEye = s.select('#starting');
+// var func1 = _ => {startingEye.animate({ d: middle1 }, 1000, mina.backout, func2);}
+// var func2 = _ => {startingEye.animate({ d: supperBig }, 2000, mina.backout, func3);}
+// var func3 = _ => {startingEye.animate({ d: middle2 }, 2000, mina.backout, func4);}
+// var func4 = _ => {startingEye.animate({ d: starting }, 2000, mina.backout, func1);}
+
+
+// var svg2 = document.getElementById("eye2");
+// var s2 = Snap(svg2);
+// var startingEye2 = s2.select('#starting2');
+// var func1a = _ => {startingEye2.animate({ d: middle1 }, 1000, mina.backout, func2a);}
+// var func2a = _ => {startingEye2.animate({ d: supperBig }, 2000, mina.backout, func3a);}
+// var func3a = _ => {startingEye2.animate({ d: middle2 }, 2000, mina.backout, func4a);}
+// var func4a = _ => {startingEye2.animate({ d: starting }, 2000, mina.backout, func1a);}
+
+
+// func1();
+// func1a();
+
+
+
+
+
+
+// anime
+// const starting = "M43 73C32.5 77 32 72 1 106L6.5 112.5L23.5 118.5L36.5 122L54 124.5L66.5 126.5L81 128L105 131L128 134.5L165.5 136.5L194 137L239 136.5L274.5 134L290.5 130L312 124.5L344 112L362 103L387.5 84.5L406 65.5L427.5 39.5L438 16L439.5 7.5V1.5L413.5 7.5L370.5 16L266 33L160 46L103 54L43 73Z"
+// const middle1 = "M120 87C110.667 93.1667 18.5 135.5 1 167L5 180.5L21 188.5L38.5 192L53.5 194.5L72.5 197.5L91 201L113 205L137.5 208.5L172.5 215.5L205 218.5H238.5H263.5L294.5 216.5L324.5 210.5L362.5 201L392 188.5L421 166L451 132L477 89L491.5 40.5L496.5 1L472 2L430 8L358.5 19.5L288.5 35.5L211.5 54L169 68L120 87Z"
+// const supperBig = "M63.5 85.5C54.1667 91.6667 56 90 1.5 179L5.5 188.5L12.5 196.5L23 201.5L36 208L49.5 211L70 213.5L104 220L123.5 227.5L152 233.5L185.5 237.5L223 241H263L291.5 237.5L319.5 229L354.5 216L384.5 196.5L406 175.5L432.5 137.5L452.5 102L468.5 49L473 1H452.5H414.5L340.5 5L263 18.5L165.5 43.5L117 58L63.5 85.5Z"
+// const middle2 = "M80.5 70.5C71.1667 76.6667 55.5 85 1 174L9.5 188.5L18.5 197L32 203L44.5 205.5L57 207.5L76 212L108.5 219.5L132 225.5L170 231L199.5 234.5H238.5L271 233L299.5 229.5L327.5 221L362.5 208L392.5 188.5L414 167.5L440.5 129.5L460.5 94L472 42.5L477.5 1H473.5H429.5L359.5 6.5L306.5 14L177 43L140 54L80.5 70.5Z"
+
+// let eyesvg = document.querySelectorAll('.eyesvg')
+
+// let lefteye = document.getElementById('Vector2')
+// let righteye = document.getElementById('Vector2')
+
+// eyesvg.forEach(actionOnEye);
+
+
+// const timeline = anime.timeline({
+//     duration: 500,
+//     direction: 'alternate',
+//     autoplay: true,
+//     loop: true
+// })
+
+// anime({
+//     targets: righteye,
+//     d: [
+//         { value: starting },
+//         { value: middle1 },
+//         { value: supperBig },
+//         { value: middle2 }
+//     ],
+//     easing: 'easeOutQuad',
+//     // easing: 'easeOutElastic(1, .8)', //easing: 'easeInOutQuad',
+//     delay: 20,
+//     duration: 6000,

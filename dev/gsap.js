@@ -2880,3 +2880,38 @@
         Y.units[t] = "px"
     }),
     oe.registerPlugin(or);
+    var ur = oe.registerPlugin(or) || oe
+      , hr = ur.core.Tween;
+    e.Back = Ce,
+    e.Bounce = Ae,
+    e.CSSPlugin = or,
+    e.Circ = ze,
+    e.Cubic = we,
+    e.Elastic = ke,
+    e.Expo = De,
+    e.Linear = be,
+    e.Power0 = _e,
+    e.Power1 = me,
+    e.Power2 = ge,
+    e.Power3 = ve,
+    e.Power4 = ye,
+    e.Quad = Te,
+    e.Quart = xe,
+    e.Quint = Oe,
+    e.Sine = Se,
+    e.SteppedEase = Pe,
+    e.Strong = Me,
+    e.TimelineLite = Nt,
+    e.TimelineMax = Nt,
+    e.TweenLite = Jt,
+    e.TweenMax = hr,
+    e.default = ur,
+    e.gsap = ur;
+    if (typeof (window) === "undefined" || window !== e) {
+        Object.defineProperty(e, "__esModule", {
+            value: !0
+        })
+    } else {
+        delete e.default
+    }
+});
