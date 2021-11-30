@@ -193,3 +193,134 @@
     }
 
     function X(t, e) {
+        var n, r, o = t.slice(0),
+            i = t.length,
+            a = i - 2;
+        for (e |= 0, n = 0; n < i; n++) r = (n + e) % a, t[n++] = o[r], t[n] = o[1 + r]
+    }
+
+    function Y(t, e, n, r, o) {
+        var i, a, s, h, l = t.length,
+            c = 0,
+            g = l - 2;
+        for (n *= 6, a = 0; a < l; a += 6) h = t[i = (a + n) % g] - (e[a] - r), s = t[1 + i] - (e[a + 1] - o), c += w(s * s + h * h);
+        return c
+    }
+
+    function Z(t, e, n) {
+        var r, o, i, a = t.length,
+            s = S(t),
+            h = S(e),
+            l = h[0] - s[0],
+            c = h[1] - s[1],
+            g = Y(t, e, 0, l, c),
+            f = 0;
+        for (i = 6; i < a; i += 6)(o = Y(t, e, i / 6, l, c)) < g && (g = o, f = i);
+        if (n)
+            for (reverseSegment(r = t.slice(0)), i = 6; i < a; i += 6)(o = Y(r, e, i / 6, l, c)) < g && (g = o, f = -i);
+        return f / 6
+    }
+
+    function $(t, e, n) {
+        for (var r, o, i, a, s, h, l = t.length, c = 1e20, g = 0, f = 0; - 1 < --l;)
+            for (h = (r = t[l]).length, s = 0; s < h; s += 6) o = r[s] - e, i = r[s + 1] - n, (a = w(o * o + i * i)) < c && (c = a, g = r[s], f = r[s + 1]);
+        return [g, f]
+    }
+
+    function _(t, e, n, r, o, i) {
+        var a, s, h, l, c = e.length,
+            g = 0,
+            f = Math.min(t.size || T(t), e[n].size || T(e[n])) * r,
+            p = 1e20,
+            u = t.centerX + o,
+            d = t.centerY + i;
+        for (a = n; a < c && !((e[a].size || T(e[a])) < f); a++) s = e[a].centerX - u, h = e[a].centerY - d, (l = w(s * s + h * h)) < p && (g = a, p = l);
+        return l = e[g], e.splice(g, 1), l
+    }
+
+    function aa(t, e) {
+        var n, r, o, i, a, s, h, l, c, g, f, p, u, d, P = 0,
+            _ = t.length,
+            m = e / ((_ - 2) / 6);
+        for (u = 2; u < _; u += 6)
+            for (P += m; .999999 < P;) n = t[u - 2], r = t[u - 1], o = t[u], i = t[u + 1], a = t[u + 2], s = t[u + 3], h = t[u + 4], l = t[u + 5], c = n + (o - n) * (d = 1 / ((Math.floor(P) || 1) + 1)), c += ((f = o + (a - o) * d) - c) * d, f += (a + (h - a) * d - f) * d, g = r + (i - r) * d, g += ((p = i + (s - i) * d) - g) * d, p += (s + (l - s) * d - p) * d, t.splice(u, 4, n + (o - n) * d, r + (i - r) * d, c, g, c + (f - c) * d, g + (p - g) * d, f, p, a + (h - a) * d, s + (l - s) * d), u += 6, _ += 6, P--;
+        return t
+    }
+
+    function ba(t, e, n, r, o) {
+        var i, a, s, h, l, c, g, f = e.length - t.length,
+            p = 0 < f ? e : t,
+            u = 0 < f ? t : e,
+            d = 0,
+            P = "complexity" === r ? V : W,
+            m = "position" === r ? 0 : "number" == typeof r ? r : .8,
+            w = u.length,
+            v = "object" == typeof n && n.push ? n.slice(0) : [n],
+            y = "reverse" === v[0] || v[0] < 0,
+            x = "log" === n;
+        if (u[0]) {
+            if (1 < p.length && (t.sort(P), e.sort(P), p.size || U(p), u.size || U(u), c = p.centerX - u.centerX, g = p.centerY - u.centerY, P === W))
+                for (w = 0; w < u.length; w++) p.splice(w, 0, _(u[w], p, w, m, c, g));
+            if (f)
+                for (f < 0 && (f = -f), p[0].length > u[0].length && aa(u[0], (p[0].length - u[0].length) / 6 | 0), w = u.length; d < f;) p[w].size || T(p[w]), h = (s = $(u, p[w].centerX, p[w].centerY))[0], l = s[1], u[w++] = [h, l, h, l, h, l, h, l], u.totalPoints += 8, d++;
+            for (w = 0; w < t.length; w++) i = e[w], a = t[w], (f = i.length - a.length) < 0 ? aa(i, -f / 6 | 0) : 0 < f && aa(a, f / 6 | 0), y && !1 !== o && !a.reversed && reverseSegment(a), (n = v[w] || 0 === v[w] ? v[w] : "auto") && (a.closed || Math.abs(a[0] - a[a.length - 2]) < .5 && Math.abs(a[1] - a[a.length - 1]) < .5 ? "auto" === n || "log" === n ? (v[w] = n = Z(a, i, !w || !1 === o), n < 0 && (y = !0, reverseSegment(a), n = -n), X(a, 6 * n)) : "reverse" !== n && (w && n < 0 && reverseSegment(a), X(a, 6 * (n < 0 ? -n : n))) : !y && ("auto" === n && Math.abs(i[0] - a[0]) + Math.abs(i[1] - a[1]) + Math.abs(i[i.length - 2] - a[a.length - 2]) + Math.abs(i[i.length - 1] - a[a.length - 1]) > Math.abs(i[0] - a[a.length - 2]) + Math.abs(i[1] - a[a.length - 1]) + Math.abs(i[i.length - 2] - a[0]) + Math.abs(i[i.length - 1] - a[1]) || n % 2) ? (reverseSegment(a), v[w] = -1, y = !0) : "auto" === n ? v[w] = 0 : "reverse" === n && (v[w] = -1), a.closed !== i.closed && (a.closed = i.closed = !1));
+            return x && M("shapeIndex:[" + v.join(",") + "]"), t.shapeIndex = v
+        }
+    }
+
+    function ca(t, e, n, r, o) {
+        var i = stringToRawPath(t[0]),
+            a = stringToRawPath(t[1]);
+        ba(i, a, e || 0 === e ? e : "auto", n, o) && (t[0] = rawPathToString(i), t[1] = rawPathToString(a), "log" !== r && !0 !== r || M('precompile:["' + t[0] + '","' + t[1] + '"]'))
+    }
+
+    function ea(t, e) {
+        var n, r, o, i, a, s, h, l = 0,
+            c = parseFloat(t[0]),
+            g = parseFloat(t[1]),
+            f = c + "," + g + " ";
+        for (n = .5 * e / (.5 * (o = t.length) - 1), r = 0; r < o - 2; r += 2) {
+            if (l += n, s = parseFloat(t[r + 2]), h = parseFloat(t[r + 3]), .999999 < l)
+                for (a = 1 / (Math.floor(l) + 1), i = 1; .999999 < l;) f += (c + (s - c) * a * i).toFixed(2) + "," + (g + (h - g) * a * i).toFixed(2) + " ", l--, i++;
+            f += s + "," + h + " ", c = s, g = h
+        }
+        return f
+    }
+
+    function fa(t) {
+        var e = t[0].match(L) || [],
+            n = t[1].match(L) || [],
+            r = n.length - e.length;
+        0 < r ? t[0] = ea(e, r) : t[1] = ea(n, -r)
+    }
+
+    function ga(e) {
+        return isNaN(e) ? fa : function (t) {
+            fa(t), t[1] = function _offsetPoints(t, e) {
+                if (!e) return t;
+                var n, r, o, i = t.match(L) || [],
+                    a = i.length,
+                    s = "";
+                for (n = "reverse" === e ? (r = a - 1, -2) : (r = (2 * (parseInt(e, 10) || 0) + 1 + 100 * a) % a, 2), o = 0; o < a; o += 2) s += i[r - 1] + "," + i[r] + " ", r = (r + n) % a;
+                return s
+            }(t[1], parseInt(e, 10))
+        }
+    }
+
+    function ia(t, e) {
+        for (var n, r, o, i, a, s, h, l, c, g, f, p, u = t.length, d = .2 * (e || 1); - 1 < --u;) {
+            for (f = (r = t[u]).isSmooth = r.isSmooth || [0, 0, 0, 0], p = r.smoothData = r.smoothData || [0, 0, 0, 0], f.length = 4, l = r.length - 2, h = 6; h < l; h += 6) o = r[h] - r[h - 2], i = r[h + 1] - r[h - 1], a = r[h + 2] - r[h], s = r[h + 3] - r[h + 1], c = v(i, o), g = v(s, a), (n = Math.abs(c - g) < d) && (p[h - 2] = c, p[h + 2] = g, p[h - 1] = w(o * o + i * i), p[h + 3] = w(a * a + s * s)), f.push(n, n, 0, 0, n, n);
+            r[l] === r[0] && r[1 + l] === r[1] && (o = r[0] - r[l - 2], i = r[1] - r[l - 1], a = r[2] - r[0], s = r[3] - r[1], c = v(i, o), g = v(s, a), Math.abs(c - g) < d && (p[l - 2] = c, p[2] = g, p[l - 1] = w(o * o + i * i), p[3] = w(a * a + s * s), f[l - 2] = f[l - 1] = !0))
+        }
+        return t
+    }
+
+    function ja(t) {
+        var e = t.trim().split(" ");
+        return {
+            x: (~t.indexOf("left") ? 0 : ~t.indexOf("right") ? 100 : isNaN(parseFloat(e[0])) ? 50 : parseFloat(e[0])) / 100,
+            y: (~t.indexOf("top") ? 0 : ~t.indexOf("bottom") ? 100 : isNaN(parseFloat(e[1])) ? 50 : parseFloat(e[1])) / 100
+        }
+    }
+
+    function ma(t, e, n, r) {
