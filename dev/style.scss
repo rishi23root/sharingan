@@ -1,0 +1,60 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  outline: none;
+}
+
+.cointainer {
+  background-color: black;
+  display: grid;
+  grid-template-columns: 0.8fr 2.5fr 0.8fr 2.5fr 0.8fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  height: 100vh;
+  width: 100vw;
+  grid-template-areas:
+    ". . . . .  "
+    ". lefteye  .  righteye . "
+    ". . . . .";
+}
+
+.eyecointainer {
+  background-color: white;
+  animation: fadein 1s ease-in;
+}
+
+.eye {
+  transform: scale(1.01);
+  height: 100%;
+  width: 100%;
+  stroke-width: 3;
+  overflow: hidden;
+  transition: all 0.3;
+}
+
+.eyevector {
+  border: 2px solid black;
+}
+.righteye {
+  mix-blend-mode: difference;
+  grid-area: righteye;
+}
+.lefteye {
+  mix-blend-mode: difference;
+  transform: scaleX(-1);
+  grid-area: lefteye;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.simpleEye {
+  filter: drop-shadow(-20px 20px 20px rgba(0, 0, 0, 0.7));
+}
