@@ -175,3 +175,134 @@
         r._dirty || ta(r, t)),
         t
     }
+    function Ba(t, e) {
+        var r;
+        if ((e._time || e._initted && !e._dur) && (r = ya(t.rawTime(), e),
+        (!e._dur || Tt(0, e.totalDuration(), r) - e._tTime > X) && e.render(r, !0)),
+        ta(t, e)._dp && t._initted && t._time >= t._dur && t._ts) {
+            if (t._dur < t.duration())
+                for (r = t; r._dp; )
+                    0 <= r.rawTime() && r.totalTime(r._tTime),
+                    r = r._dp;
+            t._zTime = -X
+        }
+    }
+    function Ca(t, e, r, i) {
+        return e.parent && sa(e),
+        e._start = da((q(r) ? r : r || t !== I ? bt(t, r, e) : t._time) + e._delay),
+        e._end = da(e._start + (e.totalDuration() / Math.abs(e.timeScale()) || 0)),
+        function _addLinkedListItem(t, e, r, i, n) {
+            void 0 === r && (r = "_first"),
+            void 0 === i && (i = "_last");
+            var a, s = t[i];
+            if (n)
+                for (a = e[n]; s && s[n] > a; )
+                    s = s._prev;
+            s ? (e._next = s._next,
+            s._next = e) : (e._next = t[r],
+            t[r] = e),
+            e._next ? e._next._prev = e : t[i] = e,
+            e._prev = s,
+            e.parent = e._dp = t
+        }(t, e, "_first", "_last", t._sort ? "_start" : 0),
+        vt(e) || (t._recent = e),
+        i || Ba(t, e),
+        t
+    }
+    function Da(t, e) {
+        return (ot.ScrollTrigger || N("scrollTrigger", e)) && ot.ScrollTrigger.create(e, t)
+    }
+    function Ea(t, e, r, i) {
+        return jt(t, e),
+        t._initted ? !r && t._pt && (t._dur && !1 !== t.vars.lazy || !t._dur && t.vars.lazy) && f !== St.frame ? (ht.push(t),
+        t._lazy = [e, i],
+        1) : void 0 : 1
+    }
+    function Ja(t, e, r, i) {
+        var n = t._repeat
+          , a = da(e) || 0
+          , s = t._tTime / t._tDur;
+        return s && !i && (t._time *= a / t._dur),
+        t._dur = a,
+        t._tDur = n ? n < 0 ? 1e10 : da(a * (n + 1) + t._rDelay * n) : a,
+        0 < s && !i ? Aa(t, t._tTime = t._tDur * s) : t.parent && za(t),
+        r || ta(t.parent, t),
+        t
+    }
+    function Ka(t) {
+        return t instanceof Nt ? ta(t) : Ja(t, t._dur)
+    }
+    function Na(e, r, i) {
+        var n, a, s = q(r[1]), o = (s ? 2 : 1) + (e < 2 ? 0 : 1), u = r[o];
+        if (s && (u.duration = r[1]),
+        u.parent = i,
+        e) {
+            for (n = u,
+            a = i; a && !("immediateRender"in n); )
+                n = a.vars.defaults || {},
+                a = t(a.vars.inherit) && a.parent;
+            u.immediateRender = t(n.immediateRender),
+            e < 2 ? u.runBackwards = 1 : u.startAt = r[o - 1]
+        }
+        return new Jt(r[0],u,r[1 + o])
+    }
+    function Oa(t, e) {
+        return t || 0 === t ? e(t) : e
+    }
+    function Qa(t, e) {
+        return o(t) && (e = st.exec(t)) ? t.substr(e.index + e[0].length) : ""
+    }
+    function Ta(t, e) {
+        return t && s(t) && "length"in t && (!e && !t.length || t.length - 1 in t && s(t[0])) && !t.nodeType && t !== i
+    }
+    function Xa(t) {
+        return t.sort(function() {
+            return .5 - Math.random()
+        })
+    }
+    function Ya(t) {
+        if (p(t))
+            return t;
+        var c = s(t) ? t : {
+            each: t
+        }
+          , _ = Rt(c.ease)
+          , m = c.from || 0
+          , g = parseFloat(c.base) || 0
+          , v = {}
+          , e = 0 < m && m < 1
+          , y = isNaN(m) || e
+          , b = c.axis
+          , T = m
+          , w = m;
+        return o(m) ? T = w = {
+            center: .5,
+            edges: .5,
+            end: 1
+        }[m] || 0 : !e && y && (T = m[0],
+        w = m[1]),
+        function(t, e, r) {
+            var i, n, a, s, o, u, h, l, f, d = (r || c).length, p = v[d];
+            if (!p) {
+                if (!(f = "auto" === c.grid ? 0 : (c.grid || [1, j])[1])) {
+                    for (h = -j; h < (h = r[f++].getBoundingClientRect().left) && f < d; )
+                        ;
+                    f--
+                }
+                for (p = v[d] = [],
+                i = y ? Math.min(f, d) * T - .5 : m % f,
+                n = f === j ? 0 : y ? d * w / f - .5 : m / f | 0,
+                l = j,
+                u = h = 0; u < d; u++)
+                    a = u % f - i,
+                    s = n - (u / f | 0),
+                    p[u] = o = b ? Math.abs("y" === b ? s : a) : G(a * a + s * s),
+                    h < o && (h = o),
+                    o < l && (l = o);
+                "random" === m && Xa(p),
+                p.max = h - l,
+                p.min = l,
+                p.v = d = (parseFloat(c.amount) || parseFloat(c.each) * (d < f ? d - 1 : b ? "y" === b ? d / f : f : Math.max(f, d / f)) || 0) * ("edges" === m ? -1 : 1),
+                p.b = d < 0 ? g - d : g,
+                p.u = Qa(c.amount || c.each) || 0,
+                _ = _ && d < 0 ? Bt(_) : _
