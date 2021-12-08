@@ -699,3 +699,134 @@
     }
     ba("Linear,Quad,Cubic,Quart,Quint,Strong", function(t, e) {
         var r = e < 5 ? e + 1 : e;
+        Jb(t + ",Power" + (r - 1), e ? function(t) {
+            return Math.pow(t, r)
+        }
+        : function(t) {
+            return t
+        }
+        , function(t) {
+            return 1 - Math.pow(1 - t, r)
+        }, function(t) {
+            return t < .5 ? Math.pow(2 * t, r) / 2 : 1 - Math.pow(2 * (1 - t), r) / 2
+        })
+    }),
+    zt.Linear.easeNone = zt.none = zt.Linear.easeIn,
+    Jb("Elastic", Lb("in"), Lb("out"), Lb()),
+    E = 7.5625,
+    B = 1 / 2.75,
+    Jb("Bounce", function(t) {
+        return 1 - pm(1 - t)
+    }, pm),
+    Jb("Expo", function(t) {
+        return t ? Math.pow(2, 10 * (t - 1)) : 0
+    }),
+    Jb("Circ", function(t) {
+        return -(G(1 - t * t) - 1)
+    }),
+    Jb("Sine", function(t) {
+        return 1 === t ? 1 : 1 - Z(t * V)
+    }),
+    Jb("Back", Mb("in"), Mb("out"), Mb()),
+    zt.SteppedEase = zt.steps = ot.SteppedEase = {
+        config: function config(t, e) {
+            void 0 === t && (t = 1);
+            var r = 1 / t
+              , i = t + (e ? 0 : 1)
+              , n = e ? 1 : 0;
+            return function(t) {
+                return ((i * Tt(0, .99999999, t) | 0) + n) * r
+            }
+        }
+    },
+    L.ease = zt["quad.out"],
+    ba("onComplete,onUpdate,onStart,onRepeat,onReverseComplete,onInterrupt", function(t) {
+        return _t += t + "," + t + "Params,"
+    });
+    var It, Lt = function GSCache(t, e) {
+        this.id = J++,
+        (t._gsap = this).target = t,
+        this.harness = e,
+        this.get = e ? e.get : aa,
+        this.set = e ? e.getSetter : Kt
+    }, qt = ((It = Animation.prototype).delay = function delay(t) {
+        return t || 0 === t ? (this.parent && this.parent.smoothChildTiming && this.startTime(this._start + t - this._delay),
+        this._delay = t,
+        this) : this._delay
+    }
+    ,
+    It.duration = function duration(t) {
+        return arguments.length ? this.totalDuration(0 < this._repeat ? t + (t + this._rDelay) * this._repeat : t) : this.totalDuration() && this._dur
+    }
+    ,
+    It.totalDuration = function totalDuration(t) {
+        return arguments.length ? (this._dirty = 0,
+        Ja(this, this._repeat < 0 ? t : (t - this._repeat * this._rDelay) / (this._repeat + 1))) : this._tDur
+    }
+    ,
+    It.totalTime = function totalTime(t, e) {
+        if (Dt(),
+        !arguments.length)
+            return this._tTime;
+        var r = this._dp;
+        if (r && r.smoothChildTiming && this._ts) {
+            for (Aa(this, t),
+            !r._dp || r.parent || Ba(r, this); r && r.parent; )
+                r.parent._time !== r._start + (0 <= r._ts ? r._tTime / r._ts : (r.totalDuration() - r._tTime) / -r._ts) && r.totalTime(r._tTime, !0),
+                r = r.parent;
+            !this.parent && this._dp.autoRemoveChildren && (0 < this._ts && t < this._tDur || this._ts < 0 && 0 < t || !this._tDur && !t) && Ca(this._dp, this, this._start - this._delay)
+        }
+        return (this._tTime !== t || !this._dur && !e || this._initted && Math.abs(this._zTime) === X || !t && !this._initted && (this.add || this._ptLookup)) && (this._ts || (this._pTime = t),
+        ga(this, t, e)),
+        this
+    }
+    ,
+    It.time = function time(t, e) {
+        return arguments.length ? this.totalTime(Math.min(this.totalDuration(), t + wa(this)) % (this._dur + this._rDelay) || (t ? this._dur : 0), e) : this._time
+    }
+    ,
+    It.totalProgress = function totalProgress(t, e) {
+        return arguments.length ? this.totalTime(this.totalDuration() * t, e) : this.totalDuration() ? Math.min(1, this._tTime / this._tDur) : this.ratio
+    }
+    ,
+    It.progress = function progress(t, e) {
+        return arguments.length ? this.totalTime(this.duration() * (!this._yoyo || 1 & this.iteration() ? t : 1 - t) + wa(this), e) : this.duration() ? Math.min(1, this._time / this._dur) : this.ratio
+    }
+    ,
+    It.iteration = function iteration(t, e) {
+        var r = this.duration() + this._rDelay;
+        return arguments.length ? this.totalTime(this._time + (t - 1) * r, e) : this._repeat ? gt(this._tTime, r) + 1 : 1
+    }
+    ,
+    It.timeScale = function timeScale(t) {
+        if (!arguments.length)
+            return this._rts === -X ? 0 : this._rts;
+        if (this._rts === t)
+            return this;
+        var e = this.parent && this._ts ? ya(this.parent._time, this) : this._tTime;
+        return this._rts = +t || 0,
+        this._ts = this._ps || t === -X ? 0 : this._rts,
+        function _recacheAncestors(t) {
+            for (var e = t.parent; e && e.parent; )
+                e._dirty = 1,
+                e.totalDuration(),
+                e = e.parent
+        }(this.totalTime(Tt(-this._delay, this._tDur, e), !0)),
+        za(this),
+        this
+    }
+    ,
+    It.paused = function paused(t) {
+        return arguments.length ? (this._ps !== t && ((this._ps = t) ? (this._pTime = this._tTime || Math.max(-this._delay, this.rawTime()),
+        this._ts = this._act = 0) : (Dt(),
+        this._ts = this._rts,
+        this.totalTime(this.parent && !this.parent.smoothChildTiming ? this.rawTime() : this._tTime || this._pTime, 1 === this.progress() && Math.abs(this._zTime) !== X && (this._tTime -= X)))),
+        this) : this._ps
+    }
+    ,
+    It.startTime = function startTime(t) {
+        if (arguments.length) {
+            this._start = t;
+            var e = this.parent || this._dp;
+            return !e || !e._sort && this.parent || Ca(e, this, t - this._delay),
+            this
