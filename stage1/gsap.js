@@ -830,3 +830,134 @@
             var e = this.parent || this._dp;
             return !e || !e._sort && this.parent || Ca(e, this, t - this._delay),
             this
+        }
+        return this._start
+    }
+    ,
+    It.endTime = function endTime(e) {
+        return this._start + (t(e) ? this.totalDuration() : this.duration()) / Math.abs(this._ts || 1)
+    }
+    ,
+    It.rawTime = function rawTime(t) {
+        var e = this.parent || this._dp;
+        return e ? t && (!this._ts || this._repeat && this._time && this.totalProgress() < 1) ? this._tTime % (this._dur + this._rDelay) : this._ts ? ya(e.rawTime(t), this) : this._tTime : this._tTime
+    }
+    ,
+    It.globalTime = function globalTime(t) {
+        for (var e = this, r = arguments.length ? t : e.rawTime(); e; )
+            r = e._start + r / (e._ts || 1),
+            e = e._dp;
+        return r
+    }
+    ,
+    It.repeat = function repeat(t) {
+        return arguments.length ? (this._repeat = t === 1 / 0 ? -2 : t,
+        Ka(this)) : -2 === this._repeat ? 1 / 0 : this._repeat
+    }
+    ,
+    It.repeatDelay = function repeatDelay(t) {
+        if (arguments.length) {
+            var e = this._time;
+            return this._rDelay = t,
+            Ka(this),
+            e ? this.time(e) : this
+        }
+        return this._rDelay
+    }
+    ,
+    It.yoyo = function yoyo(t) {
+        return arguments.length ? (this._yoyo = t,
+        this) : this._yoyo
+    }
+    ,
+    It.seek = function seek(e, r) {
+        return this.totalTime(bt(this, e), t(r))
+    }
+    ,
+    It.restart = function restart(e, r) {
+        return this.play().totalTime(e ? -this._delay : 0, t(r))
+    }
+    ,
+    It.play = function play(t, e) {
+        return null != t && this.seek(t, e),
+        this.reversed(!1).paused(!1)
+    }
+    ,
+    It.reverse = function reverse(t, e) {
+        return null != t && this.seek(t || this.totalDuration(), e),
+        this.reversed(!0).paused(!1)
+    }
+    ,
+    It.pause = function pause(t, e) {
+        return null != t && this.seek(t, e),
+        this.paused(!0)
+    }
+    ,
+    It.resume = function resume() {
+        return this.paused(!1)
+    }
+    ,
+    It.reversed = function reversed(t) {
+        return arguments.length ? (!!t !== this.reversed() && this.timeScale(-this._rts || (t ? -X : 0)),
+        this) : this._rts < 0
+    }
+    ,
+    It.invalidate = function invalidate() {
+        return this._initted = this._act = 0,
+        this._zTime = -X,
+        this
+    }
+    ,
+    It.isActive = function isActive() {
+        var t, e = this.parent || this._dp, r = this._start;
+        return !(e && !(this._ts && this._initted && e.isActive() && (t = e.rawTime(!0)) >= r && t < this.endTime(!0) - X))
+    }
+    ,
+    It.eventCallback = function eventCallback(t, e, r) {
+        var i = this.vars;
+        return 1 < arguments.length ? (e ? (i[t] = e,
+        r && (i[t + "Params"] = r),
+        "onUpdate" === t && (this._onUpdate = e)) : delete i[t],
+        this) : i[t]
+    }
+    ,
+    It.then = function then(t) {
+        var i = this;
+        return new Promise(function(e) {
+            function Gn() {
+                var t = i.then;
+                i.then = null,
+                p(r) && (r = r(i)) && (r.then || r === i) && (i.then = t),
+                e(r),
+                i.then = t
+            }
+            var r = p(t) ? t : ia;
+            i._initted && 1 === i.totalProgress() && 0 <= i._ts || !i._tTime && i._ts < 0 ? Gn() : i._prom = Gn
+        }
+        )
+    }
+    ,
+    It.kill = function kill() {
+        lb(this)
+    }
+    ,
+    Animation);
+    function Animation(t) {
+        this.vars = t,
+        this._delay = +t.delay || 0,
+        (this._repeat = t.repeat === 1 / 0 ? -2 : t.repeat || 0) && (this._rDelay = t.repeatDelay || 0,
+        this._yoyo = !!t.yoyo || !!t.yoyoEase),
+        this._ts = 1,
+        Ja(this, +t.duration, 1, 1),
+        this.data = t.data,
+        c || St.wake()
+    }
+    ja(qt.prototype, {
+        _time: 0,
+        _start: 0,
+        _end: 0,
+        _tTime: 0,
+        _tDur: 0,
+        _dirty: 0,
+        _repeat: 0,
+        _yoyo: !1,
