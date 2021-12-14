@@ -1485,3 +1485,134 @@
                 a = ja({
                     overwrite: !1,
                     data: "isFromStart",
+                    lazy: b && t(T),
+                    immediateRender: b,
+                    stagger: 0,
+                    parent: z
+                }, i),
+                c && (a[l.prop] = c),
+                sa(e._startAt = Jt.set(D, a)),
+                r < 0 && e._startAt.render(-1, !0),
+                e._zTime = r,
+                b) {
+                    if (!r)
+                        return
+                } else
+                    _initTween(e._startAt, X);
+            for (e._pt = 0,
+            T = A && t(T) || T && !A,
+            n = 0; n < D.length; n++) {
+                if (h = (o = D[n])._gsap || $(D)[n]._gsap,
+                e._ptLookup[n] = d = {},
+                lt[h.id] && ht.length && fa(),
+                p = F === D ? n : F.indexOf(o),
+                l && !1 !== (f = new l).init(o, c || i, e, p, F) && (e._pt = s = new ae(e._pt,o,f.name,0,1,f.render,f,0,f.priority),
+                f._props.forEach(function(t) {
+                    d[t] = s
+                }),
+                f.priority && (u = 1)),
+                !l || c)
+                    for (a in i)
+                        ft[a] && (f = Tb(a, i, e, p, o, F)) ? f.priority && (u = 1) : d[a] = s = Yt.call(e, o, a, "get", i[a], p, F, 0, g.stringFilter);
+                e._op && e._op[n] && e.kill(o, e._op[n]),
+                E && e._pt && (Qt = e,
+                I.killTweensOf(o, d, e.globalTime(r)),
+                m = !e.parent,
+                Qt = 0),
+                e._pt && T && (lt[h.id] = 1)
+            }
+            u && ne(e),
+            e._onInit && e._onInit(e)
+        }
+        e._onUpdate = w,
+        e._initted = (!e._op || e._pt) && !m,
+        C && r <= 0 && B.render(j, !0, !0)
+    }, Xt = function _parseFuncOrString(t, e, r, i, n) {
+        return p(t) ? t.call(e, r, i, n) : o(t) && ~t.indexOf("random(") ? gb(t) : t
+    }, Ut = _t + "repeat,repeatDelay,yoyo,repeatRefresh,yoyoEase", Vt = {};
+    ba(Ut + ",id,stagger,delay,duration,paused,scrollTrigger", function(t) {
+        return Vt[t] = 1
+    });
+    var Jt = function(F) {
+        function Tween(e, r, i, n) {
+            var a;
+            "number" == typeof r && (i.duration = r,
+            r = i,
+            i = null);
+            var o, u, h, l, f, d, p, c, _ = (a = F.call(this, n ? r : oa(r)) || this).vars, m = _.duration, g = _.delay, y = _.immediateRender, b = _.stagger, T = _.overwrite, w = _.keyframes, x = _.defaults, M = _.scrollTrigger, k = _.yoyoEase, C = r.parent || I, P = (W(e) || H(e) ? q(e[0]) : "length"in r) ? [e] : xt(e);
+            if (a._targets = P.length ? $(P) : O("GSAP target " + e + " not found. https://greensock.com", !Y.nullTargetWarn) || [],
+            a._ptLookup = [],
+            a._overwrite = T,
+            w || b || v(m) || v(g)) {
+                if (r = a.vars,
+                (o = a.timeline = new Nt({
+                    data: "nested",
+                    defaults: x || {}
+                })).kill(),
+                o.parent = o._dp = _assertThisInitialized(a),
+                o._start = 0,
+                b || v(m) || v(g)) {
+                    if (l = P.length,
+                    p = b && Ya(b),
+                    s(b))
+                        for (f in b)
+                            ~Ut.indexOf(f) && ((c = c || {})[f] = b[f]);
+                    for (u = 0; u < l; u++)
+                        (h = na(r, Vt)).stagger = 0,
+                        k && (h.yoyoEase = k),
+                        c && mt(h, c),
+                        d = P[u],
+                        h.duration = +Xt(m, _assertThisInitialized(a), u, d, P),
+                        h.delay = (+Xt(g, _assertThisInitialized(a), u, d, P) || 0) - a._delay,
+                        !b && 1 === l && h.delay && (a._delay = g = h.delay,
+                        a._start += g,
+                        h.delay = 0),
+                        o.to(d, h, p ? p(u, d, P) : 0),
+                        o._ease = zt.none;
+                    o.duration() ? m = g = 0 : a.timeline = 0
+                } else if (w) {
+                    oa(ja(o.vars.defaults, {
+                        ease: "none"
+                    })),
+                    o._ease = Rt(w.ease || r.ease || "none");
+                    var A, S, D, z = 0;
+                    if (W(w))
+                        w.forEach(function(t) {
+                            return o.to(P, t, ">")
+                        });
+                    else {
+                        for (f in h = {},
+                        w)
+                            "ease" === f || "easeEach" === f || Xb(f, w[f], h, w.easeEach);
+                        for (f in h)
+                            for (A = h[f].sort(function(t, e) {
+                                return t.t - e.t
+                            }),
+                            u = z = 0; u < A.length; u++)
+                                (D = {
+                                    ease: (S = A[u]).e,
+                                    duration: (S.t - (u ? A[u - 1].t : 0)) / 100 * m
+                                })[f] = S.v,
+                                o.to(P, D, z),
+                                z += D.duration;
+                        o.duration() < m && o.to({}, {
+                            duration: m - o.duration()
+                        })
+                    }
+                }
+                m || a.duration(m = o.duration())
+            } else
+                a.timeline = 0;
+            return !0 !== T || R || (Qt = _assertThisInitialized(a),
+            I.killTweensOf(P),
+            Qt = 0),
+            Ca(C, _assertThisInitialized(a), i),
+            r.reversed && a.reverse(),
+            r.paused && a.paused(!0),
+            (y || !m && !w && a._start === da(C._time) && t(y) && function _hasNoPausedAncestors(t) {
+                return !t || t._ts && _hasNoPausedAncestors(t.parent)
+            }(_assertThisInitialized(a)) && "nested" !== C.data) && (a._tTime = -X,
+            a.render(Math.max(0, -g))),
+            M && Da(_assertThisInitialized(a), M),
+            a
+        }
