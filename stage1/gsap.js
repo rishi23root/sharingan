@@ -1747,3 +1747,134 @@
                 if (!o)
                     return e;
                 for (i in r = mt({}, e),
+                o)
+                    if (i in r)
+                        for (n = (a = o[i].split(",")).length; n--; )
+                            r[a[n]] = r[i];
+                return r
+            }(f, e)),
+            l = f.length; l--; )
+                if (~d.indexOf(f[l]))
+                    for (u in n = p[l],
+                    "all" === e ? (i[l] = e,
+                    s = n,
+                    a = {}) : (a = i[l] = i[l] || {},
+                    s = e),
+                    s)
+                        (h = n && n[u]) && ("kill"in h.d && !0 !== h.d.kill(u) || ra(this, h, "_pt"),
+                        delete n[u]),
+                        "all" !== a && (a[u] = 1);
+            return this._initted && !this._pt && c && lb(this),
+            this
+        }
+        ,
+        Tween.to = function to(t, e, r) {
+            return new Tween(t,e,r)
+        }
+        ,
+        Tween.from = function from(t, e) {
+            return Na(1, arguments)
+        }
+        ,
+        Tween.delayedCall = function delayedCall(t, e, r, i) {
+            return new Tween(e,0,{
+                immediateRender: !1,
+                lazy: !1,
+                overwrite: !1,
+                delay: t,
+                onComplete: e,
+                onReverseComplete: e,
+                onCompleteParams: r,
+                onReverseCompleteParams: r,
+                callbackScope: i
+            })
+        }
+        ,
+        Tween.fromTo = function fromTo(t, e, r) {
+            return Na(2, arguments)
+        }
+        ,
+        Tween.set = function set(t, e) {
+            return e.duration = 0,
+            e.repeatDelay || (e.repeat = 0),
+            new Tween(t,e)
+        }
+        ,
+        Tween.killTweensOf = function killTweensOf(t, e, r) {
+            return I.killTweensOf(t, e, r)
+        }
+        ,
+        Tween
+    }(qt);
+    ja(Jt.prototype, {
+        _targets: [],
+        _lazy: 0,
+        _startAt: 0,
+        _op: 0,
+        _onInit: 0
+    }),
+    ba("staggerTo,staggerFrom,staggerFromTo", function(r) {
+        Jt[r] = function() {
+            var t = new Nt
+              , e = wt.call(arguments, 0);
+            return e.splice("staggerFromTo" === r ? 5 : 4, 0, 0),
+            t[r].apply(t, e)
+        }
+    });
+    function dc(t, e, r) {
+        return t.setAttribute(e, r)
+    }
+    function lc(t, e, r, i) {
+        i.mSet(t, e, i.m.call(i.tween, r, i.mt), i)
+    }
+    var Gt = function _setterPlain(t, e, r) {
+        return t[e] = r
+    }
+      , $t = function _setterFunc(t, e, r) {
+        return t[e](r)
+    }
+      , Zt = function _setterFuncWithParam(t, e, r, i) {
+        return t[e](i.fp, r)
+    }
+      , Kt = function _getSetter(t, e) {
+        return p(t[e]) ? $t : r(t[e]) && t.setAttribute ? dc : Gt
+    }
+      , Ht = function _renderPlain(t, e) {
+        return e.set(e.t, e.p, Math.round(1e6 * (e.s + e.c * t)) / 1e6, e)
+    }
+      , Wt = function _renderBoolean(t, e) {
+        return e.set(e.t, e.p, !!(e.s + e.c * t), e)
+    }
+      , te = function _renderComplexString(t, e) {
+        var r = e._pt
+          , i = "";
+        if (!t && e.b)
+            i = e.b;
+        else if (1 === t && e.e)
+            i = e.e;
+        else {
+            for (; r; )
+                i = r.p + (r.m ? r.m(r.s + r.c * t) : Math.round(1e4 * (r.s + r.c * t)) / 1e4) + i,
+                r = r._next;
+            i += e.c
+        }
+        e.set(e.t, e.p, i, e)
+    }
+      , ee = function _renderPropTweens(t, e) {
+        for (var r = e._pt; r; )
+            r.r(t, r.d),
+            r = r._next
+    }
+      , re = function _addPluginModifier(t, e, r, i) {
+        for (var n, a = this._pt; a; )
+            n = a._next,
+            a.p === i && a.modifier(t, e, r),
+            a = n
+    }
+      , ie = function _killPropTweensOf(t) {
+        for (var e, r, i = this._pt; i; )
+            r = i._next,
+            i.p === t && !i.op || i.op === t ? ra(this, i, "_pt") : i.dep || (e = 1),
+            i = r;
+        return !e
+    }
