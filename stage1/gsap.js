@@ -2009,3 +2009,134 @@
             }
         },
         isTweening: function isTweening(t) {
+            return 0 < I.getTweensOf(t, !0).length
+        },
+        defaults: function defaults(t) {
+            return t && t.ease && (t.ease = Rt(t.ease, L.ease)),
+            ma(L, t || {})
+        },
+        config: function config(t) {
+            return ma(Y, t || {})
+        },
+        registerEffect: function registerEffect(t) {
+            var i = t.name
+              , n = t.effect
+              , e = t.plugins
+              , a = t.defaults
+              , r = t.extendTimeline;
+            (e || "").split(",").forEach(function(t) {
+                return t && !ft[t] && !ot[t] && O(i + " effect requires " + t + " plugin.")
+            }),
+            dt[i] = function(t, e, r) {
+                return n(xt(t), ja(e || {}, a), r)
+            }
+            ,
+            r && (Nt.prototype[i] = function(t, e, r) {
+                return this.add(dt[i](t, s(e) ? e : (r = e) && {}, this), r)
+            }
+            )
+        },
+        registerEase: function registerEase(t, e) {
+            zt[t] = Rt(e)
+        },
+        parseEase: function parseEase(t, e) {
+            return arguments.length ? Rt(t, e) : zt
+        },
+        getById: function getById(t) {
+            return I.getById(t)
+        },
+        exportRoot: function exportRoot(e, r) {
+            void 0 === e && (e = {});
+            var i, n, a = new Nt(e);
+            for (a.smoothChildTiming = t(e.smoothChildTiming),
+            I.remove(a),
+            a._dp = 0,
+            a._time = a._tTime = I._time,
+            i = I._first; i; )
+                n = i._next,
+                !r && !i._dur && i instanceof Jt && i.vars.onComplete === i._targets[0] || Ca(a, i, i._start - i._delay),
+                i = n;
+            return Ca(I, a, 0),
+            a
+        },
+        utils: {
+            wrap: function wrap(e, t, r) {
+                var i = t - e;
+                return W(e) ? db(e, wrap(0, e.length), t) : Oa(r, function(t) {
+                    return (i + (t - e) % i) % i + e
+                })
+            },
+            wrapYoyo: function wrapYoyo(e, t, r) {
+                var i = t - e
+                  , n = 2 * i;
+                return W(e) ? db(e, wrapYoyo(0, e.length - 1), t) : Oa(r, function(t) {
+                    return e + (i < (t = (n + (t - e) % n) % n || 0) ? n - t : t)
+                })
+            },
+            distribute: Ya,
+            random: _a,
+            snap: $a,
+            normalize: function normalize(t, e, r) {
+                return Ot(t, e, 0, 1, r)
+            },
+            getUnit: Qa,
+            clamp: function clamp(e, r, t) {
+                return Oa(t, function(t) {
+                    return Tt(e, r, t)
+                })
+            },
+            splitColor: rb,
+            toArray: xt,
+            selector: function selector(r) {
+                return r = xt(r)[0] || O("Invalid scope") || {},
+                function(t) {
+                    var e = r.current || r.nativeElement || r;
+                    return xt(t, e.querySelectorAll ? e : e === r ? O("Invalid scope") || a.createElement("div") : r)
+                }
+            },
+            mapRange: Ot,
+            pipe: function pipe() {
+                for (var t = arguments.length, e = new Array(t), r = 0; r < t; r++)
+                    e[r] = arguments[r];
+                return function(t) {
+                    return e.reduce(function(t, e) {
+                        return e(t)
+                    }, t)
+                }
+            },
+            unitize: function unitize(e, r) {
+                return function(t) {
+                    return e(parseFloat(t)) + (r || Qa(t))
+                }
+            },
+            interpolate: function interpolate(e, r, t, i) {
+                var n = isNaN(e + r) ? 0 : function(t) {
+                    return (1 - t) * e + t * r
+                }
+                ;
+                if (!n) {
+                    var a, s, u, h, l, f = o(e), d = {};
+                    if (!0 === t && (i = 1) && (t = null),
+                    f)
+                        e = {
+                            p: e
+                        },
+                        r = {
+                            p: r
+                        };
+                    else if (W(e) && !W(r)) {
+                        for (u = [],
+                        h = e.length,
+                        l = h - 2,
+                        s = 1; s < h; s++)
+                            u.push(interpolate(e[s - 1], e[s]));
+                        h--,
+                        n = function func(t) {
+                            t *= h;
+                            var e = Math.min(l, ~~t);
+                            return u[e](t - e)
+                        }
+                        ,
+                        t = r
+                    } else
+                        i || (e = mt(W(e) ? [] : {}, e));
