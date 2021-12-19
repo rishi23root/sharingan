@@ -2140,3 +2140,134 @@
                         t = r
                     } else
                         i || (e = mt(W(e) ? [] : {}, e));
+                    if (!u) {
+                        for (a in r)
+                            Yt.call(d, e, a, "get", r[a]);
+                        n = function func(t) {
+                            return ee(t, d) || (f ? e.p : e)
+                        }
+                    }
+                }
+                return Oa(t, n)
+            },
+            shuffle: Xa
+        },
+        install: M,
+        effects: dt,
+        ticker: St,
+        updateRoot: Nt.updateRoot,
+        plugins: ft,
+        globalTimeline: I,
+        core: {
+            PropTween: ae,
+            globals: P,
+            Tween: Jt,
+            Timeline: Nt,
+            Animation: qt,
+            getCache: _,
+            _removeLinkedListItem: ra,
+            suppressOverwrites: function suppressOverwrites(t) {
+                return R = t
+            }
+        }
+    };
+    ba("to,from,fromTo,delayedCall,set,killTweensOf", function(t) {
+        return se[t] = Jt[t]
+    }),
+    St.add(Nt.updateRoot),
+    d = se.to({}, {
+        duration: 0
+    });
+    function pc(t, e) {
+        for (var r = t._pt; r && r.p !== e && r.op !== e && r.fp !== e; )
+            r = r._next;
+        return r
+    }
+    function rc(t, n) {
+        return {
+            name: t,
+            rawVars: 1,
+            init: function init(t, i, e) {
+                e._onInit = function(t) {
+                    var e, r;
+                    if (o(i) && (e = {},
+                    ba(i, function(t) {
+                        return e[t] = 1
+                    }),
+                    i = e),
+                    n) {
+                        for (r in e = {},
+                        i)
+                            e[r] = n(i[r]);
+                        i = e
+                    }
+                    !function _addModifiers(t, e) {
+                        var r, i, n, a = t._targets;
+                        for (r in e)
+                            for (i = a.length; i--; )
+                                (n = (n = t._ptLookup[i][r]) && n.d) && (n._pt && (n = pc(n, r)),
+                                n && n.modifier && n.modifier(e[r], t, a[i], r))
+                    }(t, i)
+                }
+            }
+        }
+    }
+    var oe = se.registerPlugin({
+        name: "attr",
+        init: function init(t, e, r, i, n) {
+            var a, s;
+            for (a in e)
+                (s = this.add(t, "setAttribute", (t.getAttribute(a) || 0) + "", e[a], i, n, 0, 0, a)) && (s.op = a),
+                this._props.push(a)
+        }
+    }, {
+        name: "endArray",
+        init: function init(t, e) {
+            for (var r = e.length; r--; )
+                this.add(t, r, t[r] || 0, e[r])
+        }
+    }, rc("roundProps", Za), rc("modifiers"), rc("snap", $a)) || se;
+    Jt.version = Nt.version = oe.version = "3.9.1",
+    l = 1,
+    u() && Dt();
+    function ad(t, e) {
+        return e.set(e.t, e.p, Math.round(1e4 * (e.s + e.c * t)) / 1e4 + e.u, e)
+    }
+    function bd(t, e) {
+        return e.set(e.t, e.p, 1 === t ? e.e : Math.round(1e4 * (e.s + e.c * t)) / 1e4 + e.u, e)
+    }
+    function cd(t, e) {
+        return e.set(e.t, e.p, t ? Math.round(1e4 * (e.s + e.c * t)) / 1e4 + e.u : e.b, e)
+    }
+    function dd(t, e) {
+        var r = e.s + e.c * t;
+        e.set(e.t, e.p, ~~(r + (r < 0 ? -.5 : .5)) + e.u, e)
+    }
+    function ed(t, e) {
+        return e.set(e.t, e.p, t ? e.e : e.b, e)
+    }
+    function fd(t, e) {
+        return e.set(e.t, e.p, 1 !== t ? e.b : e.e, e)
+    }
+    function gd(t, e, r) {
+        return t.style[e] = r
+    }
+    function hd(t, e, r) {
+        return t.style.setProperty(e, r)
+    }
+    function id(t, e, r) {
+        return t._gsap[e] = r
+    }
+    function jd(t, e, r) {
+        return t._gsap.scaleX = t._gsap.scaleY = r
+    }
+    function kd(t, e, r, i, n) {
+        var a = t._gsap;
+        a.scaleX = a.scaleY = r,
+        a.renderTransform(n, a)
+    }
+    function ld(t, e, r, i, n) {
+        var a = t._gsap;
+        a[e] = r,
+        a.renderTransform(n, a)
+    }
