@@ -2795,3 +2795,123 @@
                         "scale" !== d && "transform" !== d && ~(d = Ne[d]).indexOf(",") && (d = d.split(",")[0])),
                         m = d in Fe)
                             if (g || ((v = t._gsap).renderTransform && !e.parseTransform || Ze(t, e.parseTransform),
+                            y = !1 !== e.smoothOrigin && v.smooth,
+                            (g = this._pt = new ae(this._pt,w,Qe,0,1,v.renderTransform,v,0,-1)).dep = 1),
+                            "scale" === d)
+                                this._pt = new ae(this._pt,v,"scaleY",v.scaleY,(_ ? _ * u : u - v.scaleY) || 0),
+                                T.push("scaleY", d),
+                                d += "X";
+                            else {
+                                if ("transformOrigin" === d) {
+                                    s = Fd(s),
+                                    v.svg ? Nd(t, s, 0, y, 0, this) : ((c = parseFloat(s.split(" ")[2]) || 0) !== v.zOrigin && zd(this, v, "zOrigin", v.zOrigin, c),
+                                    zd(this, w, d, Ke(a), Ke(s)));
+                                    continue
+                                }
+                                if ("svgOrigin" === d) {
+                                    Nd(t, s, 1, y, 0, this);
+                                    continue
+                                }
+                                if (d in $e) {
+                                    Xd(this, v, d, h, s, _);
+                                    continue
+                                }
+                                if ("smoothOrigin" === d) {
+                                    zd(this, v, "smooth", v.smooth, s);
+                                    continue
+                                }
+                                if ("force3D" === d) {
+                                    v[d] = s;
+                                    continue
+                                }
+                                if ("transform" === d) {
+                                    Zd(this, s, t);
+                                    continue
+                                }
+                            }
+                        else
+                            d in w || (d = Xe(d) || d);
+                        if (m || (u || 0 === u) && (h || 0 === h) && !qe.test(s) && d in w)
+                            u = u || 0,
+                            (p = (a + "").substr((h + "").length)) !== (c = Qa(s) || (d in Y.units ? Y.units[d] : p)) && (h = Bd(t, d, a, c)),
+                            this._pt = new ae(this._pt,m ? v : w,d,h,_ ? _ * u : u - h,m || "px" !== c && "zIndex" !== d || !1 === e.autoRound ? ad : dd),
+                            this._pt.u = c || 0,
+                            p !== c && "%" !== c && (this._pt.b = a,
+                            this._pt.r = cd);
+                        else if (d in w)
+                            Dd.call(this, t, d, a, s);
+                        else {
+                            if (!(d in t)) {
+                                N(d, s);
+                                continue
+                            }
+                            this.add(t, d, a || t[d], s, i, n)
+                        }
+                        T.push(d)
+                    }
+            b && ne(this)
+        },
+        get: Cd,
+        aliases: Ne,
+        getSetter: function getSetter(t, e, i) {
+            var n = Ne[e];
+            return n && n.indexOf(",") < 0 && (e = n),
+            e in Fe && e !== Ye && (t._gsap.x || Cd(t, "x")) ? i && pe === i ? "scale" === e ? jd : id : (pe = i || {}) && ("scale" === e ? kd : ld) : t.style && !r(t.style[e]) ? gd : ~e.indexOf("-") ? hd : Kt(t, e)
+        },
+        core: {
+            _removeProperty: yd,
+            _getMatrix: Md
+        }
+    };
+    oe.utils.checkPrefix = Xe,
+    sr = ba((nr = "x,y,z,scale,scaleX,scaleY,xPercent,yPercent") + "," + (ar = "rotation,rotationX,rotationY,skewX,skewY") + ",transform,transformOrigin,svgOrigin,force3D,smoothOrigin,transformPerspective", function(t) {
+        Fe[t] = 1
+    }),
+    ba(ar, function(t) {
+        Y.units[t] = "deg",
+        $e[t] = 1
+    }),
+    Ne[sr[13]] = nr + "," + ar,
+    ba("0:translateX,1:translateY,2:translateZ,8:rotate,8:rotationZ,8:rotateZ,9:rotateX,10:rotateY", function(t) {
+        var e = t.split(":");
+        Ne[e[1]] = sr[e[0]]
+    }),
+    ba("x,y,z,top,right,bottom,left,width,height,fontSize,padding,margin,perspective", function(t) {
+        Y.units[t] = "px"
+    }),
+    oe.registerPlugin(or);
+    var ur = oe.registerPlugin(or) || oe
+      , hr = ur.core.Tween;
+    e.Back = Ce,
+    e.Bounce = Ae,
+    e.CSSPlugin = or,
+    e.Circ = ze,
+    e.Cubic = we,
+    e.Elastic = ke,
+    e.Expo = De,
+    e.Linear = be,
+    e.Power0 = _e,
+    e.Power1 = me,
+    e.Power2 = ge,
+    e.Power3 = ve,
+    e.Power4 = ye,
+    e.Quad = Te,
+    e.Quart = xe,
+    e.Quint = Oe,
+    e.Sine = Se,
+    e.SteppedEase = Pe,
+    e.Strong = Me,
+    e.TimelineLite = Nt,
+    e.TimelineMax = Nt,
+    e.TweenLite = Jt,
+    e.TweenMax = hr,
+    e.default = ur,
+    e.gsap = ur;
+    if (typeof (window) === "undefined" || window !== e) {
+        Object.defineProperty(e, "__esModule", {
+            value: !0
+        })
+    } else {
+        delete e.default
+    }
+});
