@@ -6,3 +6,76 @@
     overflow: hidden;
     outline: none;
   }
+
+  .cointainer {
+    background-color: black;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 0.8fr 2.5fr 0.8fr 2.5fr 0.8fr;
+        grid-template-columns: 0.8fr 2.5fr 0.8fr 2.5fr 0.8fr;
+    -ms-grid-rows: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+    height: 100vh;
+    width: 100vw;
+        grid-template-areas: ". . . . .  "
+  ". lefteye  .  righteye . "
+  ". . . . .";
+  }
+
+  .eyecointainer {
+    background-color: white;
+    -webkit-animation: fadein 1s ease-in;
+            animation: fadein 1s ease-in;
+  }
+
+  .eye {
+    -webkit-transform: scale(1.01);
+            transform: scale(1.01);
+    height: 100%;
+    width: 100%;
+    stroke-width: 3;
+    overflow: hidden;
+  }
+
+  .eyevector {
+    border: 2px solid black;
+  }
+
+  .righteye {
+    mix-blend-mode: difference;
+    -ms-grid-row: 2;
+    -ms-grid-column: 4;
+    grid-area: righteye;
+  }
+
+  .lefteye {
+    mix-blend-mode: difference;
+    -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+    -ms-grid-row: 2;
+    -ms-grid-column: 2;
+    grid-area: lefteye;
+  }
+
+  @-webkit-keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .simpleEye {
+    -webkit-filter: drop-shadow(-20px 20px 20px rgba(0, 0, 0, 0.7));
+            filter: drop-shadow(-20px 20px 20px rgba(0, 0, 0, 0.7));
+  }
