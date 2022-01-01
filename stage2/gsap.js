@@ -318,3 +318,134 @@
             return (e - e % 1) / i + (q(t) ? 0 : Qa(t))
         }
     }
+    function $a(u, t) {
+        var h, l, e = W(u);
+        return !e && s(u) && (h = e = u.radius || j,
+        u.values ? (u = xt(u.values),
+        (l = !q(u[0])) && (h *= h)) : u = Za(u.increment)),
+        Oa(t, e ? p(u) ? function(t) {
+            return l = u(t),
+            Math.abs(l - t) <= h ? l : t
+        }
+        : function(t) {
+            for (var e, r, i = parseFloat(l ? t.x : t), n = parseFloat(l ? t.y : 0), a = j, s = 0, o = u.length; o--; )
+                (e = l ? (e = u[o].x - i) * e + (r = u[o].y - n) * r : Math.abs(u[o] - i)) < a && (a = e,
+                s = o);
+            return s = !h || a <= h ? u[s] : t,
+            l || s === t || q(t) ? s : s + Qa(t)
+        }
+        : Za(u))
+    }
+    function _a(t, e, r, i) {
+        return Oa(W(t) ? !e : !0 === r ? !!(r = 0) : !i, function() {
+            return W(t) ? t[~~(Math.random() * t.length)] : (r = r || 1e-5) && (i = r < 1 ? Math.pow(10, (r + "").length - 2) : 1) && Math.floor(Math.round((t - r / 2 + Math.random() * (e - t + .99 * r)) / r) * r * i) / i
+        })
+    }
+    function db(e, r, t) {
+        return Oa(t, function(t) {
+            return e[~~r(t)]
+        })
+    }
+    function gb(t) {
+        for (var e, r, i, n, a = 0, s = ""; ~(e = t.indexOf("random(", a)); )
+            i = t.indexOf(")", e),
+            n = "[" === t.charAt(e + 7),
+            r = t.substr(e + 7, i - e - 7).match(n ? at : tt),
+            s += t.substr(a, e - a) + _a(n ? r : +r[0], n ? 0 : +r[1], +r[2] || 1e-5),
+            a = i + 1;
+        return s + t.substr(a, t.length - a)
+    }
+    function jb(t, e, r) {
+        var i, n, a, s = t.labels, o = j;
+        for (i in s)
+            (n = s[i] - e) < 0 == !!r && n && o > (n = Math.abs(n)) && (a = i,
+            o = n);
+        return a
+    }
+    function lb(t) {
+        return sa(t),
+        t.scrollTrigger && t.scrollTrigger.kill(!1),
+        t.progress() < 1 && Mt(t, "onInterrupt"),
+        t
+    }
+    function qb(t, e, r) {
+        return (6 * (t += t < 0 ? 1 : 1 < t ? -1 : 0) < 1 ? e + (r - e) * t * 6 : t < .5 ? r : 3 * t < 2 ? e + (r - e) * (2 / 3 - t) * 6 : e) * kt + .5 | 0
+    }
+    function rb(t, e, r) {
+        var i, n, a, s, o, u, h, l, f, d, p = t ? q(t) ? [t >> 16, t >> 8 & kt, t & kt] : 0 : Ct.black;
+        if (!p) {
+            if ("," === t.substr(-1) && (t = t.substr(0, t.length - 1)),
+            Ct[t])
+                p = Ct[t];
+            else if ("#" === t.charAt(0)) {
+                if (t.length < 6 && (t = "#" + (i = t.charAt(1)) + i + (n = t.charAt(2)) + n + (a = t.charAt(3)) + a + (5 === t.length ? t.charAt(4) + t.charAt(4) : "")),
+                9 === t.length)
+                    return [(p = parseInt(t.substr(1, 6), 16)) >> 16, p >> 8 & kt, p & kt, parseInt(t.substr(7), 16) / 255];
+                p = [(t = parseInt(t.substr(1), 16)) >> 16, t >> 8 & kt, t & kt]
+            } else if ("hsl" === t.substr(0, 3))
+                if (p = d = t.match(tt),
+                e) {
+                    if (~t.indexOf("="))
+                        return p = t.match(et),
+                        r && p.length < 4 && (p[3] = 1),
+                        p
+                } else
+                    s = +p[0] % 360 / 360,
+                    o = p[1] / 100,
+                    i = 2 * (u = p[2] / 100) - (n = u <= .5 ? u * (o + 1) : u + o - u * o),
+                    3 < p.length && (p[3] *= 1),
+                    p[0] = qb(s + 1 / 3, i, n),
+                    p[1] = qb(s, i, n),
+                    p[2] = qb(s - 1 / 3, i, n);
+            else
+                p = t.match(tt) || Ct.transparent;
+            p = p.map(Number)
+        }
+        return e && !d && (i = p[0] / kt,
+        n = p[1] / kt,
+        a = p[2] / kt,
+        u = ((h = Math.max(i, n, a)) + (l = Math.min(i, n, a))) / 2,
+        h === l ? s = o = 0 : (f = h - l,
+        o = .5 < u ? f / (2 - h - l) : f / (h + l),
+        s = h === i ? (n - a) / f + (n < a ? 6 : 0) : h === n ? (a - i) / f + 2 : (i - n) / f + 4,
+        s *= 60),
+        p[0] = ~~(s + .5),
+        p[1] = ~~(100 * o + .5),
+        p[2] = ~~(100 * u + .5)),
+        r && p.length < 4 && (p[3] = 1),
+        p
+    }
+    function sb(t) {
+        var r = []
+          , i = []
+          , n = -1;
+        return t.split(Pt).forEach(function(t) {
+            var e = t.match(rt) || [];
+            r.push.apply(r, e),
+            i.push(n += e.length + 1)
+        }),
+        r.c = i,
+        r
+    }
+    function tb(t, e, r) {
+        var i, n, a, s, o = "", u = (t + o).match(Pt), h = e ? "hsla(" : "rgba(", l = 0;
+        if (!u)
+            return t;
+        if (u = u.map(function(t) {
+            return (t = rb(t, e, 1)) && h + (e ? t[0] + "," + t[1] + "%," + t[2] + "%," + t[3] : t.join(",")) + ")"
+        }),
+        r && (a = sb(t),
+        (i = r.c).join(o) !== a.c.join(o)))
+            for (s = (n = t.replace(Pt, "1").split(rt)).length - 1; l < s; l++)
+                o += n[l] + (~i.indexOf(l) ? u.shift() || h + "0,0,0,0)" : (a.length ? a : u.length ? u : r).shift());
+        if (!n)
+            for (s = (n = t.split(Pt)).length - 1; l < s; l++)
+                o += n[l] + u[l];
+        return o + n[s]
+    }
+    function wb(t) {
+        var e, r = t.join(" ");
+        if (Pt.lastIndex = 0,
+        Pt.test(r))
+            return e = At.test(r),
+            t[1] = tb(t[1], e),
