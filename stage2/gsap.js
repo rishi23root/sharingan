@@ -580,3 +580,134 @@
         return !o(t) || r || !n && Dt() ? W(t) ? function _flatten(t, e, r) {
             return void 0 === r && (r = []),
             t.forEach(function(t) {
+                return o(t) && !e || Ta(t, 1) ? r.push.apply(r, xt(t)) : r.push(t)
+            }) || r
+        }(t, r) : Ta(t) ? wt.call(t, 0) : t ? [t] : [] : wt.call((e || a).querySelectorAll(t), 0)
+    }, Ot = function mapRange(e, t, r, i, n) {
+        var a = t - e
+          , s = i - r;
+        return Oa(n, function(t) {
+            return r + ((t - e) / a * s || 0)
+        })
+    }, Mt = function _callback(t, e, r) {
+        var i, n, a = t.vars, s = a[e];
+        if (s)
+            return i = a[e + "Params"],
+            n = a.callbackScope || t,
+            r && ht.length && fa(),
+            i ? s.apply(n, i) : s.call(n)
+    }, kt = 255, Ct = {
+        aqua: [0, kt, kt],
+        lime: [0, kt, 0],
+        silver: [192, 192, 192],
+        black: [0, 0, 0],
+        maroon: [128, 0, 0],
+        teal: [0, 128, 128],
+        blue: [0, 0, kt],
+        navy: [0, 0, 128],
+        white: [kt, kt, kt],
+        olive: [128, 128, 0],
+        yellow: [kt, kt, 0],
+        orange: [kt, 165, 0],
+        gray: [128, 128, 128],
+        purple: [128, 0, 128],
+        green: [0, 128, 0],
+        red: [kt, 0, 0],
+        pink: [kt, 192, 203],
+        cyan: [0, kt, kt],
+        transparent: [kt, kt, kt, 0]
+    }, Pt = function() {
+        var t, e = "(?:\\b(?:(?:rgb|rgba|hsl|hsla)\\(.+?\\))|\\B#(?:[0-9a-f]{3,4}){1,2}\\b";
+        for (t in Ct)
+            e += "|" + t + "\\b";
+        return new RegExp(e + ")","gi")
+    }(), At = /hsl[a]?\(/, St = (x = Date.now,
+    k = 500,
+    C = 33,
+    A = x(),
+    S = A,
+    z = D = 1e3 / 240,
+    b = {
+        time: 0,
+        frame: 0,
+        tick: function tick() {
+            Ok(!0)
+        },
+        deltaRatio: function deltaRatio(t) {
+            return T / (1e3 / (t || 60))
+        },
+        wake: function wake() {
+            l && (!n && u() && (i = n = window,
+            a = i.document || {},
+            ot.gsap = oe,
+            (i.gsapVersions || (i.gsapVersions = [])).push(oe.version),
+            M(h || i.GreenSockGlobals || !i.gsap && i || {}),
+            y = i.requestAnimationFrame),
+            m && b.sleep(),
+            g = y || function(t) {
+                return setTimeout(t, z - 1e3 * b.time + 1 | 0)
+            }
+            ,
+            c = 1,
+            Ok(2))
+        },
+        sleep: function sleep() {
+            (y ? i.cancelAnimationFrame : clearTimeout)(m),
+            c = 0,
+            g = Q
+        },
+        lagSmoothing: function lagSmoothing(t, e) {
+            k = t || 1e8,
+            C = Math.min(e, k, 0)
+        },
+        fps: function fps(t) {
+            D = 1e3 / (t || 240),
+            z = 1e3 * b.time + D
+        },
+        add: function add(t) {
+            F.indexOf(t) < 0 && F.push(t),
+            Dt()
+        },
+        remove: function remove(t, e) {
+            ~(e = F.indexOf(t)) && F.splice(e, 1) && e <= w && w--
+        },
+        _listeners: F = []
+    }), Dt = function _wake() {
+        return !c && St.wake()
+    }, zt = {}, Ft = /^[\d.\-M][\d.\-,\s]/, Et = /["']/g, Bt = function _invertEase(e) {
+        return function(t) {
+            return 1 - e(1 - t)
+        }
+    }, Rt = function _parseEase(t, e) {
+        return t && (p(t) ? t : zt[t] || Fb(t)) || e
+    };
+    function Ok(t) {
+        var e, r, i, n, a = x() - S, s = !0 === t;
+        if (k < a && (A += a - C),
+        (0 < (e = (i = (S += a) - A) - z) || s) && (n = ++b.frame,
+        T = i - 1e3 * b.time,
+        b.time = i /= 1e3,
+        z += e + (D <= e ? 4 : D - e),
+        r = 1),
+        s || (m = g(Ok)),
+        r)
+            for (w = 0; w < F.length; w++)
+                F[w](i, T, n, t)
+    }
+    function pm(t) {
+        return t < B ? E * t * t : t < .7272727272727273 ? E * Math.pow(t - 1.5 / 2.75, 2) + .75 : t < .9090909090909092 ? E * (t -= 2.25 / 2.75) * t + .9375 : E * Math.pow(t - 2.625 / 2.75, 2) + .984375
+    }
+    ba("Linear,Quad,Cubic,Quart,Quint,Strong", function(t, e) {
+        var r = e < 5 ? e + 1 : e;
+        Jb(t + ",Power" + (r - 1), e ? function(t) {
+            return Math.pow(t, r)
+        }
+        : function(t) {
+            return t
+        }
+        , function(t) {
+            return 1 - Math.pow(1 - t, r)
+        }, function(t) {
+            return t < .5 ? Math.pow(2 * t, r) / 2 : 1 - Math.pow(2 * (1 - t), r) / 2
+        })
+    }),
