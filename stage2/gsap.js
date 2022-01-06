@@ -973,3 +973,134 @@
         _rts: 1
     });
     var Nt = function(n) {
+        function Timeline(e, r) {
+            var i;
+            return void 0 === e && (e = {}),
+            (i = n.call(this, e) || this).labels = {},
+            i.smoothChildTiming = !!e.smoothChildTiming,
+            i.autoRemoveChildren = !!e.autoRemoveChildren,
+            i._sort = t(e.sortChildren),
+            I && Ca(e.parent || I, _assertThisInitialized(i), r),
+            e.reversed && i.reverse(),
+            e.paused && i.paused(!0),
+            e.scrollTrigger && Da(_assertThisInitialized(i), e.scrollTrigger),
+            i
+        }
+        _inheritsLoose(Timeline, n);
+        var e = Timeline.prototype;
+        return e.to = function to(t, e, r) {
+            return Na(0, arguments, this),
+            this
+        }
+        ,
+        e.from = function from(t, e, r) {
+            return Na(1, arguments, this),
+            this
+        }
+        ,
+        e.fromTo = function fromTo(t, e, r, i) {
+            return Na(2, arguments, this),
+            this
+        }
+        ,
+        e.set = function set(t, e, r) {
+            return e.duration = 0,
+            e.parent = this,
+            oa(e).repeatDelay || (e.repeat = 0),
+            e.immediateRender = !!e.immediateRender,
+            new Jt(t,e,bt(this, r),1),
+            this
+        }
+        ,
+        e.call = function call(t, e, r) {
+            return Ca(this, Jt.delayedCall(0, t, e), r)
+        }
+        ,
+        e.staggerTo = function staggerTo(t, e, r, i, n, a, s) {
+            return r.duration = e,
+            r.stagger = r.stagger || i,
+            r.onComplete = a,
+            r.onCompleteParams = s,
+            r.parent = this,
+            new Jt(t,r,bt(this, n)),
+            this
+        }
+        ,
+        e.staggerFrom = function staggerFrom(e, r, i, n, a, s, o) {
+            return i.runBackwards = 1,
+            oa(i).immediateRender = t(i.immediateRender),
+            this.staggerTo(e, r, i, n, a, s, o)
+        }
+        ,
+        e.staggerFromTo = function staggerFromTo(e, r, i, n, a, s, o, u) {
+            return n.startAt = i,
+            oa(n).immediateRender = t(n.immediateRender),
+            this.staggerTo(e, r, n, a, s, o, u)
+        }
+        ,
+        e.render = function render(t, e, r) {
+            var i, n, a, s, o, u, h, l, f, d, p, c, _ = this._time, m = this._dirty ? this.totalDuration() : this._tDur, g = this._dur, v = t <= 0 ? 0 : da(t), y = this._zTime < 0 != t < 0 && (this._initted || !g);
+            if (this !== I && m < v && 0 <= t && (v = m),
+            v !== this._tTime || r || y) {
+                if (_ !== this._time && g && (v += this._time - _,
+                t += this._time - _),
+                i = v,
+                f = this._start,
+                u = !(l = this._ts),
+                y && (g || (_ = this._zTime),
+                !t && e || (this._zTime = t)),
+                this._repeat) {
+                    if (p = this._yoyo,
+                    o = g + this._rDelay,
+                    this._repeat < -1 && t < 0)
+                        return this.totalTime(100 * o + t, e, r);
+                    if (i = da(v % o),
+                    v === m ? (s = this._repeat,
+                    i = g) : ((s = ~~(v / o)) && s === v / o && (i = g,
+                    s--),
+                    g < i && (i = g)),
+                    d = gt(this._tTime, o),
+                    !_ && this._tTime && d !== s && (d = s),
+                    p && 1 & s && (i = g - i,
+                    c = 1),
+                    s !== d && !this._lock) {
+                        var b = p && 1 & d
+                          , T = b === (p && 1 & s);
+                        if (s < d && (b = !b),
+                        _ = b ? 0 : g,
+                        this._lock = 1,
+                        this.render(_ || (c ? 0 : da(s * o)), e, !g)._lock = 0,
+                        this._tTime = v,
+                        !e && this.parent && Mt(this, "onRepeat"),
+                        this.vars.repeatRefresh && !c && (this.invalidate()._lock = 1),
+                        _ && _ !== this._time || u != !this._ts || this.vars.onRepeat && !this.parent && !this._act)
+                            return this;
+                        if (g = this._dur,
+                        m = this._tDur,
+                        T && (this._lock = 2,
+                        _ = b ? g : -1e-4,
+                        this.render(_, !0),
+                        this.vars.repeatRefresh && !c && this.invalidate()),
+                        this._lock = 0,
+                        !this._ts && !u)
+                            return this;
+                        Hb(this, c)
+                    }
+                }
+                if (this._hasPause && !this._forcing && this._lock < 2 && (h = function _findNextPauseTween(t, e, r) {
+                    var i;
+                    if (e < r)
+                        for (i = t._first; i && i._start <= r; ) {
+                            if ("isPause" === i.data && i._start > e)
+                                return i;
+                            i = i._next
+                        }
+                    else
+                        for (i = t._last; i && i._start >= r; ) {
+                            if ("isPause" === i.data && i._start < e)
+                                return i;
+                            i = i._prev
+                        }
+                }(this, da(_), da(i))) && (v -= i - (i = h._start)),
+                this._tTime = v,
+                this._time = i,
