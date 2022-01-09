@@ -1366,3 +1366,134 @@
     }(qt);
     ja(Nt.prototype, {
         _lock: 0,
+        _hasPause: 0,
+        _forcing: 0
+    });
+    function Tb(t, e, r, i, n, a) {
+        var u, h, l, f;
+        if (ft[t] && !1 !== (u = new ft[t]).init(n, u.rawVars ? e[t] : function _processVars(t, e, r, i, n) {
+            if (p(t) && (t = Xt(t, n, e, r, i)),
+            !s(t) || t.style && t.nodeType || W(t) || H(t))
+                return o(t) ? Xt(t, n, e, r, i) : t;
+            var a, u = {};
+            for (a in t)
+                u[a] = Xt(t[a], n, e, r, i);
+            return u
+        }(e[t], i, n, a, r), r, i, a) && (r._pt = h = new ae(r._pt,n,t,0,1,u.render,u,0,u.priority),
+        r !== d))
+            for (l = r._ptLookup[r._targets.indexOf(n)],
+            f = u._props.length; f--; )
+                l[u._props[f]] = h;
+        return u
+    }
+    function Xb(t, r, e, i) {
+        var n, a, s = r.ease || i || "power1.inOut";
+        if (W(r))
+            a = e[t] || (e[t] = []),
+            r.forEach(function(t, e) {
+                return a.push({
+                    t: e / (r.length - 1) * 100,
+                    v: t,
+                    e: s
+                })
+            });
+        else
+            for (n in r)
+                a = e[n] || (e[n] = []),
+                "ease" === n || a.push({
+                    t: parseFloat(t),
+                    v: r[n],
+                    e: s
+                })
+    }
+    var Qt, Yt = function _addPropTween(t, e, r, i, n, a, s, u, h) {
+        p(i) && (i = i(n || 0, t, a));
+        var l, f = t[e], d = "get" !== r ? r : p(f) ? h ? t[e.indexOf("set") || !p(t["get" + e.substr(3)]) ? e : "get" + e.substr(3)](h) : t[e]() : f, c = p(f) ? h ? Zt : $t : Gt;
+        if (o(i) && (~i.indexOf("random(") && (i = gb(i)),
+        "=" === i.charAt(1) && (!(l = parseFloat(d) + parseFloat(i.substr(2)) * ("-" === i.charAt(0) ? -1 : 1) + (Qa(d) || 0)) && 0 !== l || (i = l))),
+        d !== i)
+            return isNaN(d * i) || "" === i ? (f || e in t || N(e, i),
+            function _addComplexStringPropTween(t, e, r, i, n, a, s) {
+                var o, u, h, l, f, d, p, c, _ = new ae(this._pt,t,e,0,1,te,null,n), m = 0, g = 0;
+                for (_.b = r,
+                _.e = i,
+                r += "",
+                (p = ~(i += "").indexOf("random(")) && (i = gb(i)),
+                a && (a(c = [r, i], t, e),
+                r = c[0],
+                i = c[1]),
+                u = r.match(it) || []; o = it.exec(i); )
+                    l = o[0],
+                    f = i.substring(m, o.index),
+                    h ? h = (h + 1) % 5 : "rgba(" === f.substr(-5) && (h = 1),
+                    l !== u[g++] && (d = parseFloat(u[g - 1]) || 0,
+                    _._pt = {
+                        _next: _._pt,
+                        p: f || 1 === g ? f : ",",
+                        s: d,
+                        c: "=" === l.charAt(1) ? parseFloat(l.substr(2)) * ("-" === l.charAt(0) ? -1 : 1) : parseFloat(l) - d,
+                        m: h && h < 4 ? Math.round : 0
+                    },
+                    m = it.lastIndex);
+                return _.c = m < i.length ? i.substring(m, i.length) : "",
+                _.fp = s,
+                (nt.test(i) || p) && (_.e = 0),
+                this._pt = _
+            }
+            .call(this, t, e, d, i, c, u || Y.stringFilter, h)) : (l = new ae(this._pt,t,e,+d || 0,i - (d || 0),"boolean" == typeof f ? Wt : Ht,0,c),
+            h && (l.fp = h),
+            s && l.modifier(s, this, t),
+            this._pt = l)
+    }, jt = function _initTween(e, r) {
+        var i, n, a, s, o, u, h, l, f, d, p, c, m, g = e.vars, v = g.ease, y = g.startAt, b = g.immediateRender, T = g.lazy, w = g.onUpdate, x = g.onUpdateParams, O = g.callbackScope, M = g.runBackwards, k = g.yoyoEase, C = g.keyframes, P = g.autoRevert, A = e._dur, S = e._startAt, D = e._targets, z = e.parent, F = z && "nested" === z.data ? z.parent._targets : D, E = "auto" === e._overwrite && !R, B = e.timeline;
+        if (!B || C && v || (v = "none"),
+        e._ease = Rt(v, L.ease),
+        e._yEase = k ? Bt(Rt(!0 === k ? v : k, L.ease)) : 0,
+        k && e._yoyo && !e._repeat && (k = e._yEase,
+        e._yEase = e._ease,
+        e._ease = k),
+        e._from = !B && !!g.runBackwards,
+        !B || C && !g.stagger) {
+            if (c = (l = D[0] ? _(D[0]).harness : 0) && g[l.prop],
+            i = na(g, ut),
+            S && sa(S.render(-1, !0)),
+            y)
+                if (sa(e._startAt = Jt.set(D, ja({
+                    data: "isStart",
+                    overwrite: !1,
+                    parent: z,
+                    immediateRender: !0,
+                    lazy: t(T),
+                    startAt: null,
+                    delay: 0,
+                    onUpdate: w,
+                    onUpdateParams: x,
+                    callbackScope: O,
+                    stagger: 0
+                }, y))),
+                r < 0 && !b && !P && e._startAt.render(-1, !0),
+                b) {
+                    if (0 < r && !P && (e._startAt = 0),
+                    A && r <= 0)
+                        return void (r && (e._zTime = r))
+                } else
+                    !1 === P && (e._startAt = 0);
+            else if (M && A)
+                if (S)
+                    P || (e._startAt = 0);
+                else if (r && (b = !1),
+                a = ja({
+                    overwrite: !1,
+                    data: "isFromStart",
+                    lazy: b && t(T),
+                    immediateRender: b,
+                    stagger: 0,
+                    parent: z
+                }, i),
+                c && (a[l.prop] = c),
+                sa(e._startAt = Jt.set(D, a)),
+                r < 0 && e._startAt.render(-1, !0),
+                e._zTime = r,
+                b) {
+                    if (!r)
+                        return
