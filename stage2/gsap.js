@@ -1890,3 +1890,134 @@
         t._pt = i
     }
       , ae = (PropTween.prototype.modifier = function modifier(t, e, r) {
+        this.mSet = this.mSet || this.set,
+        this.set = lc,
+        this.m = t,
+        this.mt = r,
+        this.tween = e
+    }
+    ,
+    PropTween);
+    function PropTween(t, e, r, i, n, a, s, o, u) {
+        this.t = e,
+        this.s = i,
+        this.c = n,
+        this.p = r,
+        this.r = a || Ht,
+        this.d = s || this,
+        this.set = o || Gt,
+        this.pr = u || 0,
+        (this._next = t) && (t._prev = this)
+    }
+    ba(_t + "parent,duration,ease,delay,overwrite,runBackwards,startAt,yoyo,immediateRender,repeat,repeatDelay,data,paused,reversed,lazy,callbackScope,stringFilter,id,yoyoEase,stagger,inherit,repeatRefresh,keyframes,autoRevert,scrollTrigger", function(t) {
+        return ut[t] = 1
+    }),
+    ot.TweenMax = ot.TweenLite = Jt,
+    ot.TimelineLite = ot.TimelineMax = Nt,
+    I = new Nt({
+        sortChildren: !1,
+        defaults: L,
+        autoRemoveChildren: !0,
+        id: "root",
+        smoothChildTiming: !0
+    }),
+    Y.stringFilter = wb;
+    var se = {
+        registerPlugin: function registerPlugin() {
+            for (var t = arguments.length, e = new Array(t), r = 0; r < t; r++)
+                e[r] = arguments[r];
+            e.forEach(function(t) {
+                return function _createPlugin(t) {
+                    var e = (t = !t.name && t.default || t).name
+                      , r = p(t)
+                      , i = e && !r && t.init ? function() {
+                        this._props = []
+                    }
+                    : t
+                      , n = {
+                        init: Q,
+                        render: ee,
+                        add: Yt,
+                        kill: ie,
+                        modifier: re,
+                        rawVars: 0
+                    }
+                      , a = {
+                        targetTest: 0,
+                        get: 0,
+                        getSetter: Kt,
+                        aliases: {},
+                        register: 0
+                    };
+                    if (Dt(),
+                    t !== i) {
+                        if (ft[e])
+                            return;
+                        ja(i, ja(na(t, n), a)),
+                        mt(i.prototype, mt(n, na(t, a))),
+                        ft[i.prop = e] = i,
+                        t.targetTest && (ct.push(i),
+                        ut[e] = 1),
+                        e = ("css" === e ? "CSS" : e.charAt(0).toUpperCase() + e.substr(1)) + "Plugin"
+                    }
+                    P(e, i),
+                    t.register && t.register(oe, i, ae)
+                }(t)
+            })
+        },
+        timeline: function timeline(t) {
+            return new Nt(t)
+        },
+        getTweensOf: function getTweensOf(t, e) {
+            return I.getTweensOf(t, e)
+        },
+        getProperty: function getProperty(i, t, e, r) {
+            o(i) && (i = xt(i)[0]);
+            var n = _(i || {}).get
+              , a = e ? ia : ha;
+            return "native" === e && (e = ""),
+            i ? t ? a((ft[t] && ft[t].get || n)(i, t, e, r)) : function(t, e, r) {
+                return a((ft[t] && ft[t].get || n)(i, t, e, r))
+            }
+            : i
+        },
+        quickSetter: function quickSetter(r, e, i) {
+            if (1 < (r = xt(r)).length) {
+                var n = r.map(function(t) {
+                    return oe.quickSetter(t, e, i)
+                })
+                  , a = n.length;
+                return function(t) {
+                    for (var e = a; e--; )
+                        n[e](t)
+                }
+            }
+            r = r[0] || {};
+            var s = ft[e]
+              , o = _(r)
+              , u = o.harness && (o.harness.aliases || {})[e] || e
+              , h = s ? function(t) {
+                var e = new s;
+                d._pt = 0,
+                e.init(r, i ? t + i : t, d, 0, [r]),
+                e.render(1, e),
+                d._pt && ee(1, d)
+            }
+            : o.set(r, u);
+            return s ? h : function(t) {
+                return h(r, u, i ? t + i : t, o, 1)
+            }
+        },
+        isTweening: function isTweening(t) {
+            return 0 < I.getTweensOf(t, !0).length
+        },
+        defaults: function defaults(t) {
+            return t && t.ease && (t.ease = Rt(t.ease, L.ease)),
+            ma(L, t || {})
+        },
+        config: function config(t) {
+            return ma(Y, t || {})
+        },
+        registerEffect: function registerEffect(t) {
+            var i = t.name
+              , n = t.effect
