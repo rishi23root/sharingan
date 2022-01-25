@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  overflow: hidden;
+  outline: none;
+}
+
+.cointainer {
+  background-color: black;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 0.8fr 2.5fr 0.8fr 2.5fr 0.8fr;
+      grid-template-columns: 0.8fr 2.5fr 0.8fr 2.5fr 0.8fr;
+  -ms-grid-rows: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+  height: 100vh;
+  width: 100vw;
+      grid-template-areas: ". . . . .  "
+ ". lefteye  .  righteye . "
+ ". . . . .";
+}
+
+.eyecointainer {
+  background-color: white;
+  -webkit-animation: fadein 1s ease-in;
+          animation: fadein 1s ease-in;
+}
+
+.eye {
+  -webkit-transform: scale(1.01);
+          transform: scale(1.01);
+  height: 100%;
+  width: 100%;
+  stroke-width: 3;
+  overflow: hidden;
+  -webkit-transition: all 0.3;
+  transition: all 0.3;
+}
+
+.eyevector {
+  border: 2px solid black;
+}
+
+.righteye {
+  mix-blend-mode: difference;
+  -ms-grid-row: 2;
+  -ms-grid-column: 4;
+  grid-area: righteye;
+}
+
+.lefteye {
+  mix-blend-mode: difference;
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+  -ms-grid-row: 2;

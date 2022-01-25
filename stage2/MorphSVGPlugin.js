@@ -395,3 +395,77 @@
                 }(e.shape || e.d || e.points || "", "d" === a, t), l && q.test(h)) return M("A <" + i + "> cannot accept path data. " + J), !1;
                 if (c = e.shapeIndex || 0 === e.shapeIndex ? e.shapeIndex : "auto", g = e.map || K.defaultMap, this._prop = e.prop, this._render = e.render || K.defaultRender, this._apply = "updateTarget" in e ? e.updateTarget : K.defaultUpdateTarget, this._rnd = Math.pow(10, isNaN(e.precision) ? 2 : +e.precision), this._tween = n, h) {
                     if (this._target = t, y = "object" == typeof e.precompile, u = this._prop ? t[this._prop] : t.getAttribute(a), this._prop || t.getAttributeNS(null, "data-original") || t.setAttributeNS(null, "data-original", u), "d" === a || this._prop) {
+                        if (u = stringToRawPath(y ? e.precompile[0] : u), d = stringToRawPath(y ? e.precompile[1] : h), !y && !ba(u, d, c, g, O)) return !1;
+                        for ("log" !== e.precompile && !0 !== e.precompile || M('precompile:["' + rawPathToString(u) + '","' + rawPathToString(d) + '"]'), (S = "linear" !== (e.type || K.defaultType)) && (u = ia(u, e.smoothTolerance), d = ia(d, e.smoothTolerance), u.size || U(u), d.size || U(d), b = ja(C[0]), this._origin = u.origin = {
+                            x: u.left + b.x * u.width,
+                            y: u.top + b.y * u.height
+                        }, C[1] && (b = ja(C[1])), this._eOrigin = {
+                            x: d.left + b.x * d.width,
+                            y: d.top + b.y * d.height
+                        }), this._rawPath = t._gsRawPath = u, _ = u.length; - 1 < --_;)
+                            for (w = u[_], v = d[_], f = w.isSmooth || [], p = v.isSmooth || [], m = w.length, P = I = 0; P < m; P += 2) v[P] === w[P] && v[P + 1] === w[P + 1] || (S ? f[P] && p[P] ? (x = w.smoothData, T = v.smoothData, N = P + (P === m - 4 ? 7 - m : 5), this._controlPT = {
+                                _next: this._controlPT,
+                                i: P,
+                                j: _,
+                                l1s: x[P + 1],
+                                l1c: T[P + 1] - x[P + 1],
+                                l2s: x[N],
+                                l2c: T[N] - x[N]
+                            }, s = this._tweenRotation(w, v, P + 2), this._tweenRotation(w, v, P, s), this._tweenRotation(w, v, N - 1, s), P += 4) : this._tweenRotation(w, v, P) : (s = this.add(w, P, w[P], v[P]), s = this.add(w, P + 1, w[P + 1], v[P + 1]) || s))
+                    } else s = this.add(t, "setAttribute", t.getAttribute(a) + "", h + "", r, o, 0, ga(c), a);
+                    S && (this.add(this._origin, "x", this._origin.x, this._eOrigin.x), s = this.add(this._origin, "y", this._origin.y, this._eOrigin.y)), s && (this._props.push("morphSVG"), s.end = h, s.endProp = a)
+                }
+                return H
+            },
+            render: function render(t, e) {
+                for (var n, r, o, i, a, s, h, l, c, g, f, p, u = e._rawPath, d = e._controlPT, P = e._anchorPT, _ = e._rnd, m = e._target, w = e._pt; w;) w.r(t, w.d), w = w._next;
+                if (1 === t && e._apply)
+                    for (w = e._pt; w;) w.end && (e._prop ? m[e._prop] = w.end : m.setAttribute(w.endProp, w.end)), w = w._next;
+                else if (u) {
+                    for (; P;) a = P.sa + t * P.ca, i = P.sl + t * P.cl, P.t[P.i] = e._origin.x + x(a) * i, P.t[P.i + 1] = e._origin.y + O(a) * i, P = P._next;
+                    for (r = t < .5 ? 2 * t * t : (4 - 2 * t) * t - 1; d;) p = (s = d.i) + (s === (o = u[d.j]).length - 4 ? 7 - o.length : 5), a = v(o[p] - o[s + 1], o[p - 1] - o[s]), g = O(a), f = x(a), l = o[s + 2], c = o[s + 3], i = d.l1s + r * d.l1c, o[s] = l - f * i, o[s + 1] = c - g * i, i = d.l2s + r * d.l2c, o[p - 1] = l + f * i, o[p] = c + g * i, d = d._next;
+                    if (m._gsRawPath = u, e._apply) {
+                        for (n = "", h = 0; h < u.length; h++)
+                            for (i = (o = u[h]).length, n += "M" + (o[0] * _ | 0) / _ + " " + (o[1] * _ | 0) / _ + " C", s = 2; s < i; s++) n += (o[s] * _ | 0) / _ + " ";
+                        e._prop ? m[e._prop] = n : m.setAttribute("d", n)
+                    }
+                }
+                e._render && u && e._render.call(e._tween, u, m)
+            },
+            kill: function kill() {
+                this._pt = this._rawPath = 0
+            },
+            getRawPath: function getRawPath(t) {
+                var e, n = (t = m(t) && r.test(t) && document.querySelector(t) || t).getAttribute ? t : 0;
+                return n && (t = t.getAttribute("d")) ? (n._gsPath || (n._gsPath = {}), (e = n._gsPath[t]) && !e._dirty ? e : n._gsPath[t] = stringToRawPath(t)) : t ? m(t) ? stringToRawPath(t) : s(t[0]) ? [t] : t : console.warn("Expecting a <path> element or an SVG path data string")
+            },
+            stringToRawPath: stringToRawPath,
+            rawPathToString: rawPathToString,
+            normalizeStrings: function normalizeStrings(t, e, n) {
+                var r = n.shapeIndex,
+                    o = n.map,
+                    i = [t, e];
+                return ca(i, r, o), i
+            },
+            pathFilter: ca,
+            pointsFilter: fa,
+            getTotalSize: U,
+            equalizeSegmentQuantity: ba,
+            convertToPath: function convertToPath$1(t, e) {
+                return j(t).map(function (t) {
+                    return convertToPath(t, !1 !== e)
+                })
+            },
+            defaultType: "linear",
+            defaultUpdateTarget: !0,
+            defaultMap: "size"
+        };
+    y() && o.registerPlugin(K), t.MorphSVGPlugin = K, t.default = K;
+    if (typeof (window) === "undefined" || window !== t) {
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        })
+    } else {
+        delete t.default
+    }
+});
