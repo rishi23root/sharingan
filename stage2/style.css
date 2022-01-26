@@ -55,3 +55,30 @@ body {
   -webkit-transform: scaleX(-1);
           transform: scaleX(-1);
   -ms-grid-row: 2;
+  -ms-grid-column: 2;
+  grid-area: lefteye;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.simpleEye {
+  -webkit-filter: drop-shadow(-20px 20px 20px rgba(0, 0, 0, 0.7));
+          filter: drop-shadow(-20px 20px 20px rgba(0, 0, 0, 0.7));
+}
+/*# sourceMappingURL=style.css.map */
