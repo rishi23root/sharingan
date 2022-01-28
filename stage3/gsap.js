@@ -233,3 +233,134 @@
         return t instanceof Nt ? ta(t) : Ja(t, t._dur)
     }
     function Na(e, r, i) {
+        var n, a, s = q(r[1]), o = (s ? 2 : 1) + (e < 2 ? 0 : 1), u = r[o];
+        if (s && (u.duration = r[1]),
+        u.parent = i,
+        e) {
+            for (n = u,
+            a = i; a && !("immediateRender"in n); )
+                n = a.vars.defaults || {},
+                a = t(a.vars.inherit) && a.parent;
+            u.immediateRender = t(n.immediateRender),
+            e < 2 ? u.runBackwards = 1 : u.startAt = r[o - 1]
+        }
+        return new Jt(r[0],u,r[1 + o])
+    }
+    function Oa(t, e) {
+        return t || 0 === t ? e(t) : e
+    }
+    function Qa(t, e) {
+        return o(t) && (e = st.exec(t)) ? t.substr(e.index + e[0].length) : ""
+    }
+    function Ta(t, e) {
+        return t && s(t) && "length"in t && (!e && !t.length || t.length - 1 in t && s(t[0])) && !t.nodeType && t !== i
+    }
+    function Xa(t) {
+        return t.sort(function() {
+            return .5 - Math.random()
+        })
+    }
+    function Ya(t) {
+        if (p(t))
+            return t;
+        var c = s(t) ? t : {
+            each: t
+        }
+          , _ = Rt(c.ease)
+          , m = c.from || 0
+          , g = parseFloat(c.base) || 0
+          , v = {}
+          , e = 0 < m && m < 1
+          , y = isNaN(m) || e
+          , b = c.axis
+          , T = m
+          , w = m;
+        return o(m) ? T = w = {
+            center: .5,
+            edges: .5,
+            end: 1
+        }[m] || 0 : !e && y && (T = m[0],
+        w = m[1]),
+        function(t, e, r) {
+            var i, n, a, s, o, u, h, l, f, d = (r || c).length, p = v[d];
+            if (!p) {
+                if (!(f = "auto" === c.grid ? 0 : (c.grid || [1, j])[1])) {
+                    for (h = -j; h < (h = r[f++].getBoundingClientRect().left) && f < d; )
+                        ;
+                    f--
+                }
+                for (p = v[d] = [],
+                i = y ? Math.min(f, d) * T - .5 : m % f,
+                n = f === j ? 0 : y ? d * w / f - .5 : m / f | 0,
+                l = j,
+                u = h = 0; u < d; u++)
+                    a = u % f - i,
+                    s = n - (u / f | 0),
+                    p[u] = o = b ? Math.abs("y" === b ? s : a) : G(a * a + s * s),
+                    h < o && (h = o),
+                    o < l && (l = o);
+                "random" === m && Xa(p),
+                p.max = h - l,
+                p.min = l,
+                p.v = d = (parseFloat(c.amount) || parseFloat(c.each) * (d < f ? d - 1 : b ? "y" === b ? d / f : f : Math.max(f, d / f)) || 0) * ("edges" === m ? -1 : 1),
+                p.b = d < 0 ? g - d : g,
+                p.u = Qa(c.amount || c.each) || 0,
+                _ = _ && d < 0 ? Bt(_) : _
+            }
+            return d = (p[t] - p.min) / p.max || 0,
+            da(p.b + (_ ? _(d) : d) * p.v) + p.u
+        }
+    }
+    function Za(r) {
+        var i = Math.pow(10, ((r + "").split(".")[1] || "").length);
+        return function(t) {
+            var e = Math.round(parseFloat(t) / r) * r * i;
+            return (e - e % 1) / i + (q(t) ? 0 : Qa(t))
+        }
+    }
+    function $a(u, t) {
+        var h, l, e = W(u);
+        return !e && s(u) && (h = e = u.radius || j,
+        u.values ? (u = xt(u.values),
+        (l = !q(u[0])) && (h *= h)) : u = Za(u.increment)),
+        Oa(t, e ? p(u) ? function(t) {
+            return l = u(t),
+            Math.abs(l - t) <= h ? l : t
+        }
+        : function(t) {
+            for (var e, r, i = parseFloat(l ? t.x : t), n = parseFloat(l ? t.y : 0), a = j, s = 0, o = u.length; o--; )
+                (e = l ? (e = u[o].x - i) * e + (r = u[o].y - n) * r : Math.abs(u[o] - i)) < a && (a = e,
+                s = o);
+            return s = !h || a <= h ? u[s] : t,
+            l || s === t || q(t) ? s : s + Qa(t)
+        }
+        : Za(u))
+    }
+    function _a(t, e, r, i) {
+        return Oa(W(t) ? !e : !0 === r ? !!(r = 0) : !i, function() {
+            return W(t) ? t[~~(Math.random() * t.length)] : (r = r || 1e-5) && (i = r < 1 ? Math.pow(10, (r + "").length - 2) : 1) && Math.floor(Math.round((t - r / 2 + Math.random() * (e - t + .99 * r)) / r) * r * i) / i
+        })
+    }
+    function db(e, r, t) {
+        return Oa(t, function(t) {
+            return e[~~r(t)]
+        })
+    }
+    function gb(t) {
+        for (var e, r, i, n, a = 0, s = ""; ~(e = t.indexOf("random(", a)); )
+            i = t.indexOf(")", e),
+            n = "[" === t.charAt(e + 7),
+            r = t.substr(e + 7, i - e - 7).match(n ? at : tt),
+            s += t.substr(a, e - a) + _a(n ? r : +r[0], n ? 0 : +r[1], +r[2] || 1e-5),
+            a = i + 1;
+        return s + t.substr(a, t.length - a)
+    }
+    function jb(t, e, r) {
+        var i, n, a, s = t.labels, o = j;
+        for (i in s)
+            (n = s[i] - e) < 0 == !!r && n && o > (n = Math.abs(n)) && (a = i,
+            o = n);
+        return a
+    }
+    function lb(t) {
+        return sa(t),
