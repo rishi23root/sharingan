@@ -364,3 +364,134 @@
     }
     function lb(t) {
         return sa(t),
+        t.scrollTrigger && t.scrollTrigger.kill(!1),
+        t.progress() < 1 && Mt(t, "onInterrupt"),
+        t
+    }
+    function qb(t, e, r) {
+        return (6 * (t += t < 0 ? 1 : 1 < t ? -1 : 0) < 1 ? e + (r - e) * t * 6 : t < .5 ? r : 3 * t < 2 ? e + (r - e) * (2 / 3 - t) * 6 : e) * kt + .5 | 0
+    }
+    function rb(t, e, r) {
+        var i, n, a, s, o, u, h, l, f, d, p = t ? q(t) ? [t >> 16, t >> 8 & kt, t & kt] : 0 : Ct.black;
+        if (!p) {
+            if ("," === t.substr(-1) && (t = t.substr(0, t.length - 1)),
+            Ct[t])
+                p = Ct[t];
+            else if ("#" === t.charAt(0)) {
+                if (t.length < 6 && (t = "#" + (i = t.charAt(1)) + i + (n = t.charAt(2)) + n + (a = t.charAt(3)) + a + (5 === t.length ? t.charAt(4) + t.charAt(4) : "")),
+                9 === t.length)
+                    return [(p = parseInt(t.substr(1, 6), 16)) >> 16, p >> 8 & kt, p & kt, parseInt(t.substr(7), 16) / 255];
+                p = [(t = parseInt(t.substr(1), 16)) >> 16, t >> 8 & kt, t & kt]
+            } else if ("hsl" === t.substr(0, 3))
+                if (p = d = t.match(tt),
+                e) {
+                    if (~t.indexOf("="))
+                        return p = t.match(et),
+                        r && p.length < 4 && (p[3] = 1),
+                        p
+                } else
+                    s = +p[0] % 360 / 360,
+                    o = p[1] / 100,
+                    i = 2 * (u = p[2] / 100) - (n = u <= .5 ? u * (o + 1) : u + o - u * o),
+                    3 < p.length && (p[3] *= 1),
+                    p[0] = qb(s + 1 / 3, i, n),
+                    p[1] = qb(s, i, n),
+                    p[2] = qb(s - 1 / 3, i, n);
+            else
+                p = t.match(tt) || Ct.transparent;
+            p = p.map(Number)
+        }
+        return e && !d && (i = p[0] / kt,
+        n = p[1] / kt,
+        a = p[2] / kt,
+        u = ((h = Math.max(i, n, a)) + (l = Math.min(i, n, a))) / 2,
+        h === l ? s = o = 0 : (f = h - l,
+        o = .5 < u ? f / (2 - h - l) : f / (h + l),
+        s = h === i ? (n - a) / f + (n < a ? 6 : 0) : h === n ? (a - i) / f + 2 : (i - n) / f + 4,
+        s *= 60),
+        p[0] = ~~(s + .5),
+        p[1] = ~~(100 * o + .5),
+        p[2] = ~~(100 * u + .5)),
+        r && p.length < 4 && (p[3] = 1),
+        p
+    }
+    function sb(t) {
+        var r = []
+          , i = []
+          , n = -1;
+        return t.split(Pt).forEach(function(t) {
+            var e = t.match(rt) || [];
+            r.push.apply(r, e),
+            i.push(n += e.length + 1)
+        }),
+        r.c = i,
+        r
+    }
+    function tb(t, e, r) {
+        var i, n, a, s, o = "", u = (t + o).match(Pt), h = e ? "hsla(" : "rgba(", l = 0;
+        if (!u)
+            return t;
+        if (u = u.map(function(t) {
+            return (t = rb(t, e, 1)) && h + (e ? t[0] + "," + t[1] + "%," + t[2] + "%," + t[3] : t.join(",")) + ")"
+        }),
+        r && (a = sb(t),
+        (i = r.c).join(o) !== a.c.join(o)))
+            for (s = (n = t.replace(Pt, "1").split(rt)).length - 1; l < s; l++)
+                o += n[l] + (~i.indexOf(l) ? u.shift() || h + "0,0,0,0)" : (a.length ? a : u.length ? u : r).shift());
+        if (!n)
+            for (s = (n = t.split(Pt)).length - 1; l < s; l++)
+                o += n[l] + u[l];
+        return o + n[s]
+    }
+    function wb(t) {
+        var e, r = t.join(" ");
+        if (Pt.lastIndex = 0,
+        Pt.test(r))
+            return e = At.test(r),
+            t[1] = tb(t[1], e),
+            t[0] = tb(t[0], e, sb(t[1])),
+            !0
+    }
+    function Fb(t) {
+        var e = (t + "").split("(")
+          , r = zt[e[0]];
+        return r && 1 < e.length && r.config ? r.config.apply(null, ~t.indexOf("{") ? [function _parseObjectInString(t) {
+            for (var e, r, i, n = {}, a = t.substr(1, t.length - 3).split(":"), s = a[0], o = 1, u = a.length; o < u; o++)
+                r = a[o],
+                e = o !== u - 1 ? r.lastIndexOf(",") : r.length,
+                i = r.substr(0, e),
+                n[s] = isNaN(i) ? i.replace(Et, "").trim() : +i,
+                s = r.substr(e + 1).trim();
+            return n
+        }(e[1])] : function _valueInParentheses(t) {
+            var e = t.indexOf("(") + 1
+              , r = t.indexOf(")")
+              , i = t.indexOf("(", e);
+            return t.substring(e, ~i && i < r ? t.indexOf(")", r + 1) : r)
+        }(t).split(",").map(ha)) : zt._CE && Ft.test(t) ? zt._CE("", t) : r
+    }
+    function Hb(t, e) {
+        for (var r, i = t._first; i; )
+            i instanceof Nt ? Hb(i, e) : !i.vars.yoyoEase || i._yoyo && i._repeat || i._yoyo === e || (i.timeline ? Hb(i.timeline, e) : (r = i._ease,
+            i._ease = i._yEase,
+            i._yEase = r,
+            i._yoyo = e)),
+            i = i._next
+    }
+    function Jb(t, e, r, i) {
+        void 0 === r && (r = function easeOut(t) {
+            return 1 - e(1 - t)
+        }
+        ),
+        void 0 === i && (i = function easeInOut(t) {
+            return t < .5 ? e(2 * t) / 2 : 1 - e(2 * (1 - t)) / 2
+        }
+        );
+        var n, a = {
+            easeIn: e,
+            easeOut: r,
+            easeInOut: i
+        };
+        return ba(t, function(t) {
+            for (var e in zt[t] = ot[t] = a,
+            zt[n = t.toLowerCase()] = r,
