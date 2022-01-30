@@ -495,3 +495,134 @@
         return ba(t, function(t) {
             for (var e in zt[t] = ot[t] = a,
             zt[n = t.toLowerCase()] = r,
+            a)
+                zt[n + ("easeIn" === e ? ".in" : "easeOut" === e ? ".out" : ".inOut")] = zt[t + "." + e] = a[e]
+        }),
+        a
+    }
+    function Kb(e) {
+        return function(t) {
+            return t < .5 ? (1 - e(1 - 2 * t)) / 2 : .5 + e(2 * (t - .5)) / 2
+        }
+    }
+    function Lb(r, t, e) {
+        function Sl(t) {
+            return 1 === t ? 1 : i * Math.pow(2, -10 * t) * K((t - a) * n) + 1
+        }
+        var i = 1 <= t ? t : 1
+          , n = (e || (r ? .3 : .45)) / (t < 1 ? t : 1)
+          , a = n / U * (Math.asin(1 / i) || 0)
+          , s = "out" === r ? Sl : "in" === r ? function(t) {
+            return 1 - Sl(1 - t)
+        }
+        : Kb(Sl);
+        return n = U / n,
+        s.config = function(t, e) {
+            return Lb(r, t, e)
+        }
+        ,
+        s
+    }
+    function Mb(e, r) {
+        function $l(t) {
+            return t ? --t * t * ((r + 1) * t + r) + 1 : 0
+        }
+        void 0 === r && (r = 1.70158);
+        var t = "out" === e ? $l : "in" === e ? function(t) {
+            return 1 - $l(1 - t)
+        }
+        : Kb($l);
+        return t.config = function(t) {
+            return Mb(e, t)
+        }
+        ,
+        t
+    }
+    var R, I, i, n, a, h, l, f, d, c, m, g, y, b, T, w, x, k, C, A, S, D, z, F, E, B, Y = {
+        autoSleep: 120,
+        force3D: "auto",
+        nullTargetWarn: 1,
+        units: {
+            lineHeight: ""
+        }
+    }, L = {
+        duration: .5,
+        overwrite: !1,
+        delay: 0
+    }, j = 1e8, X = 1 / j, U = 2 * Math.PI, V = U / 4, J = 0, G = Math.sqrt, Z = Math.cos, K = Math.sin, H = "function" == typeof ArrayBuffer && ArrayBuffer.isView || function() {}
+    , W = Array.isArray, tt = /(?:-?\.?\d|\.)+/gi, et = /[-+=.]*\d+[.e\-+]*\d*[e\-+]*\d*/g, rt = /[-+=.]*\d+[.e-]*\d*[a-z%]*/g, it = /[-+=.]*\d+\.?\d*(?:e-|e\+)?\d*/gi, nt = /[+-]=-?[.\d]+/, at = /[^,'"\[\]\s]+/gi, st = /[\d.+\-=]+(?:e[-+]\d*)*/i, ot = {}, ut = {}, ht = [], lt = {}, ft = {}, dt = {}, pt = 30, ct = [], _t = "", mt = function _merge(t, e) {
+        for (var r in e)
+            t[r] = e[r];
+        return t
+    }, gt = function _animationCycle(t, e) {
+        var r = Math.floor(t /= e);
+        return t && r === t ? r - 1 : r
+    }, vt = function _isFromOrFromStart(t) {
+        var e = t.data;
+        return "isFromStart" === e || "isStart" === e
+    }, yt = {
+        _start: 0,
+        endTime: Q,
+        totalDuration: Q
+    }, bt = function _parsePosition(t, e, r) {
+        var i, n, a, s = t.labels, u = t._recent || yt, h = t.duration() >= j ? u.endTime(!1) : t._dur;
+        return o(e) && (isNaN(e) || e in s) ? (n = e.charAt(0),
+        a = "%" === e.substr(-1),
+        i = e.indexOf("="),
+        "<" === n || ">" === n ? (0 <= i && (e = e.replace(/=/, "")),
+        ("<" === n ? u._start : u.endTime(0 <= u._repeat)) + (parseFloat(e.substr(1)) || 0) * (a ? (i < 0 ? u : r).totalDuration() / 100 : 1)) : i < 0 ? (e in s || (s[e] = h),
+        s[e]) : (n = parseFloat(e.charAt(i - 1) + e.substr(i + 1)),
+        a && r && (n = n / 100 * (W(r) ? r[0] : r).totalDuration()),
+        1 < i ? _parsePosition(t, e.substr(0, i - 1), r) + n : h + n)) : null == e ? h : +e
+    }, Tt = function _clamp(t, e, r) {
+        return r < t ? t : e < r ? e : r
+    }, wt = [].slice, xt = function toArray(t, e, r) {
+        return !o(t) || r || !n && Dt() ? W(t) ? function _flatten(t, e, r) {
+            return void 0 === r && (r = []),
+            t.forEach(function(t) {
+                return o(t) && !e || Ta(t, 1) ? r.push.apply(r, xt(t)) : r.push(t)
+            }) || r
+        }(t, r) : Ta(t) ? wt.call(t, 0) : t ? [t] : [] : wt.call((e || a).querySelectorAll(t), 0)
+    }, Ot = function mapRange(e, t, r, i, n) {
+        var a = t - e
+          , s = i - r;
+        return Oa(n, function(t) {
+            return r + ((t - e) / a * s || 0)
+        })
+    }, Mt = function _callback(t, e, r) {
+        var i, n, a = t.vars, s = a[e];
+        if (s)
+            return i = a[e + "Params"],
+            n = a.callbackScope || t,
+            r && ht.length && fa(),
+            i ? s.apply(n, i) : s.call(n)
+    }, kt = 255, Ct = {
+        aqua: [0, kt, kt],
+        lime: [0, kt, 0],
+        silver: [192, 192, 192],
+        black: [0, 0, 0],
+        maroon: [128, 0, 0],
+        teal: [0, 128, 128],
+        blue: [0, 0, kt],
+        navy: [0, 0, 128],
+        white: [kt, kt, kt],
+        olive: [128, 128, 0],
+        yellow: [kt, kt, 0],
+        orange: [kt, 165, 0],
+        gray: [128, 128, 128],
+        purple: [128, 0, 128],
+        green: [0, 128, 0],
+        red: [kt, 0, 0],
+        pink: [kt, 192, 203],
+        cyan: [0, kt, kt],
+        transparent: [kt, kt, kt, 0]
+    }, Pt = function() {
+        var t, e = "(?:\\b(?:(?:rgb|rgba|hsl|hsla)\\(.+?\\))|\\B#(?:[0-9a-f]{3,4}){1,2}\\b";
+        for (t in Ct)
+            e += "|" + t + "\\b";
+        return new RegExp(e + ")","gi")
+    }(), At = /hsl[a]?\(/, St = (x = Date.now,
+    k = 500,
+    C = 33,
+    A = x(),
+    S = A,
