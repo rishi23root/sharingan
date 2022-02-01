@@ -757,3 +757,134 @@
     ,
     It.duration = function duration(t) {
         return arguments.length ? this.totalDuration(0 < this._repeat ? t + (t + this._rDelay) * this._repeat : t) : this.totalDuration() && this._dur
+    }
+    ,
+    It.totalDuration = function totalDuration(t) {
+        return arguments.length ? (this._dirty = 0,
+        Ja(this, this._repeat < 0 ? t : (t - this._repeat * this._rDelay) / (this._repeat + 1))) : this._tDur
+    }
+    ,
+    It.totalTime = function totalTime(t, e) {
+        if (Dt(),
+        !arguments.length)
+            return this._tTime;
+        var r = this._dp;
+        if (r && r.smoothChildTiming && this._ts) {
+            for (Aa(this, t),
+            !r._dp || r.parent || Ba(r, this); r && r.parent; )
+                r.parent._time !== r._start + (0 <= r._ts ? r._tTime / r._ts : (r.totalDuration() - r._tTime) / -r._ts) && r.totalTime(r._tTime, !0),
+                r = r.parent;
+            !this.parent && this._dp.autoRemoveChildren && (0 < this._ts && t < this._tDur || this._ts < 0 && 0 < t || !this._tDur && !t) && Ca(this._dp, this, this._start - this._delay)
+        }
+        return (this._tTime !== t || !this._dur && !e || this._initted && Math.abs(this._zTime) === X || !t && !this._initted && (this.add || this._ptLookup)) && (this._ts || (this._pTime = t),
+        ga(this, t, e)),
+        this
+    }
+    ,
+    It.time = function time(t, e) {
+        return arguments.length ? this.totalTime(Math.min(this.totalDuration(), t + wa(this)) % (this._dur + this._rDelay) || (t ? this._dur : 0), e) : this._time
+    }
+    ,
+    It.totalProgress = function totalProgress(t, e) {
+        return arguments.length ? this.totalTime(this.totalDuration() * t, e) : this.totalDuration() ? Math.min(1, this._tTime / this._tDur) : this.ratio
+    }
+    ,
+    It.progress = function progress(t, e) {
+        return arguments.length ? this.totalTime(this.duration() * (!this._yoyo || 1 & this.iteration() ? t : 1 - t) + wa(this), e) : this.duration() ? Math.min(1, this._time / this._dur) : this.ratio
+    }
+    ,
+    It.iteration = function iteration(t, e) {
+        var r = this.duration() + this._rDelay;
+        return arguments.length ? this.totalTime(this._time + (t - 1) * r, e) : this._repeat ? gt(this._tTime, r) + 1 : 1
+    }
+    ,
+    It.timeScale = function timeScale(t) {
+        if (!arguments.length)
+            return this._rts === -X ? 0 : this._rts;
+        if (this._rts === t)
+            return this;
+        var e = this.parent && this._ts ? ya(this.parent._time, this) : this._tTime;
+        return this._rts = +t || 0,
+        this._ts = this._ps || t === -X ? 0 : this._rts,
+        function _recacheAncestors(t) {
+            for (var e = t.parent; e && e.parent; )
+                e._dirty = 1,
+                e.totalDuration(),
+                e = e.parent
+        }(this.totalTime(Tt(-this._delay, this._tDur, e), !0)),
+        za(this),
+        this
+    }
+    ,
+    It.paused = function paused(t) {
+        return arguments.length ? (this._ps !== t && ((this._ps = t) ? (this._pTime = this._tTime || Math.max(-this._delay, this.rawTime()),
+        this._ts = this._act = 0) : (Dt(),
+        this._ts = this._rts,
+        this.totalTime(this.parent && !this.parent.smoothChildTiming ? this.rawTime() : this._tTime || this._pTime, 1 === this.progress() && Math.abs(this._zTime) !== X && (this._tTime -= X)))),
+        this) : this._ps
+    }
+    ,
+    It.startTime = function startTime(t) {
+        if (arguments.length) {
+            this._start = t;
+            var e = this.parent || this._dp;
+            return !e || !e._sort && this.parent || Ca(e, this, t - this._delay),
+            this
+        }
+        return this._start
+    }
+    ,
+    It.endTime = function endTime(e) {
+        return this._start + (t(e) ? this.totalDuration() : this.duration()) / Math.abs(this._ts || 1)
+    }
+    ,
+    It.rawTime = function rawTime(t) {
+        var e = this.parent || this._dp;
+        return e ? t && (!this._ts || this._repeat && this._time && this.totalProgress() < 1) ? this._tTime % (this._dur + this._rDelay) : this._ts ? ya(e.rawTime(t), this) : this._tTime : this._tTime
+    }
+    ,
+    It.globalTime = function globalTime(t) {
+        for (var e = this, r = arguments.length ? t : e.rawTime(); e; )
+            r = e._start + r / (e._ts || 1),
+            e = e._dp;
+        return r
+    }
+    ,
+    It.repeat = function repeat(t) {
+        return arguments.length ? (this._repeat = t === 1 / 0 ? -2 : t,
+        Ka(this)) : -2 === this._repeat ? 1 / 0 : this._repeat
+    }
+    ,
+    It.repeatDelay = function repeatDelay(t) {
+        if (arguments.length) {
+            var e = this._time;
+            return this._rDelay = t,
+            Ka(this),
+            e ? this.time(e) : this
+        }
+        return this._rDelay
+    }
+    ,
+    It.yoyo = function yoyo(t) {
+        return arguments.length ? (this._yoyo = t,
+        this) : this._yoyo
+    }
+    ,
+    It.seek = function seek(e, r) {
+        return this.totalTime(bt(this, e), t(r))
+    }
+    ,
+    It.restart = function restart(e, r) {
+        return this.play().totalTime(e ? -this._delay : 0, t(r))
+    }
+    ,
+    It.play = function play(t, e) {
+        return null != t && this.seek(t, e),
+        this.reversed(!1).paused(!1)
+    }
+    ,
+    It.reverse = function reverse(t, e) {
+        return null != t && this.seek(t || this.totalDuration(), e),
+        this.reversed(!0).paused(!1)
+    }
+    ,
