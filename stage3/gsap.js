@@ -888,3 +888,134 @@
         this.reversed(!0).paused(!1)
     }
     ,
+    It.pause = function pause(t, e) {
+        return null != t && this.seek(t, e),
+        this.paused(!0)
+    }
+    ,
+    It.resume = function resume() {
+        return this.paused(!1)
+    }
+    ,
+    It.reversed = function reversed(t) {
+        return arguments.length ? (!!t !== this.reversed() && this.timeScale(-this._rts || (t ? -X : 0)),
+        this) : this._rts < 0
+    }
+    ,
+    It.invalidate = function invalidate() {
+        return this._initted = this._act = 0,
+        this._zTime = -X,
+        this
+    }
+    ,
+    It.isActive = function isActive() {
+        var t, e = this.parent || this._dp, r = this._start;
+        return !(e && !(this._ts && this._initted && e.isActive() && (t = e.rawTime(!0)) >= r && t < this.endTime(!0) - X))
+    }
+    ,
+    It.eventCallback = function eventCallback(t, e, r) {
+        var i = this.vars;
+        return 1 < arguments.length ? (e ? (i[t] = e,
+        r && (i[t + "Params"] = r),
+        "onUpdate" === t && (this._onUpdate = e)) : delete i[t],
+        this) : i[t]
+    }
+    ,
+    It.then = function then(t) {
+        var i = this;
+        return new Promise(function(e) {
+            function Gn() {
+                var t = i.then;
+                i.then = null,
+                p(r) && (r = r(i)) && (r.then || r === i) && (i.then = t),
+                e(r),
+                i.then = t
+            }
+            var r = p(t) ? t : ia;
+            i._initted && 1 === i.totalProgress() && 0 <= i._ts || !i._tTime && i._ts < 0 ? Gn() : i._prom = Gn
+        }
+        )
+    }
+    ,
+    It.kill = function kill() {
+        lb(this)
+    }
+    ,
+    Animation);
+    function Animation(t) {
+        this.vars = t,
+        this._delay = +t.delay || 0,
+        (this._repeat = t.repeat === 1 / 0 ? -2 : t.repeat || 0) && (this._rDelay = t.repeatDelay || 0,
+        this._yoyo = !!t.yoyo || !!t.yoyoEase),
+        this._ts = 1,
+        Ja(this, +t.duration, 1, 1),
+        this.data = t.data,
+        c || St.wake()
+    }
+    ja(qt.prototype, {
+        _time: 0,
+        _start: 0,
+        _end: 0,
+        _tTime: 0,
+        _tDur: 0,
+        _dirty: 0,
+        _repeat: 0,
+        _yoyo: !1,
+        parent: null,
+        _initted: !1,
+        _rDelay: 0,
+        _ts: 1,
+        _dp: 0,
+        ratio: 0,
+        _zTime: -X,
+        _prom: 0,
+        _ps: !1,
+        _rts: 1
+    });
+    var Nt = function(n) {
+        function Timeline(e, r) {
+            var i;
+            return void 0 === e && (e = {}),
+            (i = n.call(this, e) || this).labels = {},
+            i.smoothChildTiming = !!e.smoothChildTiming,
+            i.autoRemoveChildren = !!e.autoRemoveChildren,
+            i._sort = t(e.sortChildren),
+            I && Ca(e.parent || I, _assertThisInitialized(i), r),
+            e.reversed && i.reverse(),
+            e.paused && i.paused(!0),
+            e.scrollTrigger && Da(_assertThisInitialized(i), e.scrollTrigger),
+            i
+        }
+        _inheritsLoose(Timeline, n);
+        var e = Timeline.prototype;
+        return e.to = function to(t, e, r) {
+            return Na(0, arguments, this),
+            this
+        }
+        ,
+        e.from = function from(t, e, r) {
+            return Na(1, arguments, this),
+            this
+        }
+        ,
+        e.fromTo = function fromTo(t, e, r, i) {
+            return Na(2, arguments, this),
+            this
+        }
+        ,
+        e.set = function set(t, e, r) {
+            return e.duration = 0,
+            e.parent = this,
+            oa(e).repeatDelay || (e.repeat = 0),
+            e.immediateRender = !!e.immediateRender,
+            new Jt(t,e,bt(this, r),1),
+            this
+        }
+        ,
+        e.call = function call(t, e, r) {
+            return Ca(this, Jt.delayedCall(0, t, e), r)
+        }
+        ,
+        e.staggerTo = function staggerTo(t, e, r, i, n, a, s) {
+            return r.duration = e,
+            r.stagger = r.stagger || i,
