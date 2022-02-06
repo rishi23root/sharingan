@@ -1412,3 +1412,134 @@
         if (o(i) && (~i.indexOf("random(") && (i = gb(i)),
         "=" === i.charAt(1) && (!(l = parseFloat(d) + parseFloat(i.substr(2)) * ("-" === i.charAt(0) ? -1 : 1) + (Qa(d) || 0)) && 0 !== l || (i = l))),
         d !== i)
+            return isNaN(d * i) || "" === i ? (f || e in t || N(e, i),
+            function _addComplexStringPropTween(t, e, r, i, n, a, s) {
+                var o, u, h, l, f, d, p, c, _ = new ae(this._pt,t,e,0,1,te,null,n), m = 0, g = 0;
+                for (_.b = r,
+                _.e = i,
+                r += "",
+                (p = ~(i += "").indexOf("random(")) && (i = gb(i)),
+                a && (a(c = [r, i], t, e),
+                r = c[0],
+                i = c[1]),
+                u = r.match(it) || []; o = it.exec(i); )
+                    l = o[0],
+                    f = i.substring(m, o.index),
+                    h ? h = (h + 1) % 5 : "rgba(" === f.substr(-5) && (h = 1),
+                    l !== u[g++] && (d = parseFloat(u[g - 1]) || 0,
+                    _._pt = {
+                        _next: _._pt,
+                        p: f || 1 === g ? f : ",",
+                        s: d,
+                        c: "=" === l.charAt(1) ? parseFloat(l.substr(2)) * ("-" === l.charAt(0) ? -1 : 1) : parseFloat(l) - d,
+                        m: h && h < 4 ? Math.round : 0
+                    },
+                    m = it.lastIndex);
+                return _.c = m < i.length ? i.substring(m, i.length) : "",
+                _.fp = s,
+                (nt.test(i) || p) && (_.e = 0),
+                this._pt = _
+            }
+            .call(this, t, e, d, i, c, u || Y.stringFilter, h)) : (l = new ae(this._pt,t,e,+d || 0,i - (d || 0),"boolean" == typeof f ? Wt : Ht,0,c),
+            h && (l.fp = h),
+            s && l.modifier(s, this, t),
+            this._pt = l)
+    }, jt = function _initTween(e, r) {
+        var i, n, a, s, o, u, h, l, f, d, p, c, m, g = e.vars, v = g.ease, y = g.startAt, b = g.immediateRender, T = g.lazy, w = g.onUpdate, x = g.onUpdateParams, O = g.callbackScope, M = g.runBackwards, k = g.yoyoEase, C = g.keyframes, P = g.autoRevert, A = e._dur, S = e._startAt, D = e._targets, z = e.parent, F = z && "nested" === z.data ? z.parent._targets : D, E = "auto" === e._overwrite && !R, B = e.timeline;
+        if (!B || C && v || (v = "none"),
+        e._ease = Rt(v, L.ease),
+        e._yEase = k ? Bt(Rt(!0 === k ? v : k, L.ease)) : 0,
+        k && e._yoyo && !e._repeat && (k = e._yEase,
+        e._yEase = e._ease,
+        e._ease = k),
+        e._from = !B && !!g.runBackwards,
+        !B || C && !g.stagger) {
+            if (c = (l = D[0] ? _(D[0]).harness : 0) && g[l.prop],
+            i = na(g, ut),
+            S && sa(S.render(-1, !0)),
+            y)
+                if (sa(e._startAt = Jt.set(D, ja({
+                    data: "isStart",
+                    overwrite: !1,
+                    parent: z,
+                    immediateRender: !0,
+                    lazy: t(T),
+                    startAt: null,
+                    delay: 0,
+                    onUpdate: w,
+                    onUpdateParams: x,
+                    callbackScope: O,
+                    stagger: 0
+                }, y))),
+                r < 0 && !b && !P && e._startAt.render(-1, !0),
+                b) {
+                    if (0 < r && !P && (e._startAt = 0),
+                    A && r <= 0)
+                        return void (r && (e._zTime = r))
+                } else
+                    !1 === P && (e._startAt = 0);
+            else if (M && A)
+                if (S)
+                    P || (e._startAt = 0);
+                else if (r && (b = !1),
+                a = ja({
+                    overwrite: !1,
+                    data: "isFromStart",
+                    lazy: b && t(T),
+                    immediateRender: b,
+                    stagger: 0,
+                    parent: z
+                }, i),
+                c && (a[l.prop] = c),
+                sa(e._startAt = Jt.set(D, a)),
+                r < 0 && e._startAt.render(-1, !0),
+                e._zTime = r,
+                b) {
+                    if (!r)
+                        return
+                } else
+                    _initTween(e._startAt, X);
+            for (e._pt = 0,
+            T = A && t(T) || T && !A,
+            n = 0; n < D.length; n++) {
+                if (h = (o = D[n])._gsap || $(D)[n]._gsap,
+                e._ptLookup[n] = d = {},
+                lt[h.id] && ht.length && fa(),
+                p = F === D ? n : F.indexOf(o),
+                l && !1 !== (f = new l).init(o, c || i, e, p, F) && (e._pt = s = new ae(e._pt,o,f.name,0,1,f.render,f,0,f.priority),
+                f._props.forEach(function(t) {
+                    d[t] = s
+                }),
+                f.priority && (u = 1)),
+                !l || c)
+                    for (a in i)
+                        ft[a] && (f = Tb(a, i, e, p, o, F)) ? f.priority && (u = 1) : d[a] = s = Yt.call(e, o, a, "get", i[a], p, F, 0, g.stringFilter);
+                e._op && e._op[n] && e.kill(o, e._op[n]),
+                E && e._pt && (Qt = e,
+                I.killTweensOf(o, d, e.globalTime(r)),
+                m = !e.parent,
+                Qt = 0),
+                e._pt && T && (lt[h.id] = 1)
+            }
+            u && ne(e),
+            e._onInit && e._onInit(e)
+        }
+        e._onUpdate = w,
+        e._initted = (!e._op || e._pt) && !m,
+        C && r <= 0 && B.render(j, !0, !0)
+    }, Xt = function _parseFuncOrString(t, e, r, i, n) {
+        return p(t) ? t.call(e, r, i, n) : o(t) && ~t.indexOf("random(") ? gb(t) : t
+    }, Ut = _t + "repeat,repeatDelay,yoyo,repeatRefresh,yoyoEase", Vt = {};
+    ba(Ut + ",id,stagger,delay,duration,paused,scrollTrigger", function(t) {
+        return Vt[t] = 1
+    });
+    var Jt = function(F) {
+        function Tween(e, r, i, n) {
+            var a;
+            "number" == typeof r && (i.duration = r,
+            r = i,
+            i = null);
+            var o, u, h, l, f, d, p, c, _ = (a = F.call(this, n ? r : oa(r)) || this).vars, m = _.duration, g = _.delay, y = _.immediateRender, b = _.stagger, T = _.overwrite, w = _.keyframes, x = _.defaults, M = _.scrollTrigger, k = _.yoyoEase, C = r.parent || I, P = (W(e) || H(e) ? q(e[0]) : "length"in r) ? [e] : xt(e);
+            if (a._targets = P.length ? $(P) : O("GSAP target " + e + " not found. https://greensock.com", !Y.nullTargetWarn) || [],
+            a._ptLookup = [],
+            a._overwrite = T,
