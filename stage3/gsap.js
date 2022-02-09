@@ -1805,3 +1805,134 @@
         }
         ,
         Tween
+    }(qt);
+    ja(Jt.prototype, {
+        _targets: [],
+        _lazy: 0,
+        _startAt: 0,
+        _op: 0,
+        _onInit: 0
+    }),
+    ba("staggerTo,staggerFrom,staggerFromTo", function(r) {
+        Jt[r] = function() {
+            var t = new Nt
+              , e = wt.call(arguments, 0);
+            return e.splice("staggerFromTo" === r ? 5 : 4, 0, 0),
+            t[r].apply(t, e)
+        }
+    });
+    function dc(t, e, r) {
+        return t.setAttribute(e, r)
+    }
+    function lc(t, e, r, i) {
+        i.mSet(t, e, i.m.call(i.tween, r, i.mt), i)
+    }
+    var Gt = function _setterPlain(t, e, r) {
+        return t[e] = r
+    }
+      , $t = function _setterFunc(t, e, r) {
+        return t[e](r)
+    }
+      , Zt = function _setterFuncWithParam(t, e, r, i) {
+        return t[e](i.fp, r)
+    }
+      , Kt = function _getSetter(t, e) {
+        return p(t[e]) ? $t : r(t[e]) && t.setAttribute ? dc : Gt
+    }
+      , Ht = function _renderPlain(t, e) {
+        return e.set(e.t, e.p, Math.round(1e6 * (e.s + e.c * t)) / 1e6, e)
+    }
+      , Wt = function _renderBoolean(t, e) {
+        return e.set(e.t, e.p, !!(e.s + e.c * t), e)
+    }
+      , te = function _renderComplexString(t, e) {
+        var r = e._pt
+          , i = "";
+        if (!t && e.b)
+            i = e.b;
+        else if (1 === t && e.e)
+            i = e.e;
+        else {
+            for (; r; )
+                i = r.p + (r.m ? r.m(r.s + r.c * t) : Math.round(1e4 * (r.s + r.c * t)) / 1e4) + i,
+                r = r._next;
+            i += e.c
+        }
+        e.set(e.t, e.p, i, e)
+    }
+      , ee = function _renderPropTweens(t, e) {
+        for (var r = e._pt; r; )
+            r.r(t, r.d),
+            r = r._next
+    }
+      , re = function _addPluginModifier(t, e, r, i) {
+        for (var n, a = this._pt; a; )
+            n = a._next,
+            a.p === i && a.modifier(t, e, r),
+            a = n
+    }
+      , ie = function _killPropTweensOf(t) {
+        for (var e, r, i = this._pt; i; )
+            r = i._next,
+            i.p === t && !i.op || i.op === t ? ra(this, i, "_pt") : i.dep || (e = 1),
+            i = r;
+        return !e
+    }
+      , ne = function _sortPropTweensByPriority(t) {
+        for (var e, r, i, n, a = t._pt; a; ) {
+            for (e = a._next,
+            r = i; r && r.pr > a.pr; )
+                r = r._next;
+            (a._prev = r ? r._prev : n) ? a._prev._next = a : i = a,
+            (a._next = r) ? r._prev = a : n = a,
+            a = e
+        }
+        t._pt = i
+    }
+      , ae = (PropTween.prototype.modifier = function modifier(t, e, r) {
+        this.mSet = this.mSet || this.set,
+        this.set = lc,
+        this.m = t,
+        this.mt = r,
+        this.tween = e
+    }
+    ,
+    PropTween);
+    function PropTween(t, e, r, i, n, a, s, o, u) {
+        this.t = e,
+        this.s = i,
+        this.c = n,
+        this.p = r,
+        this.r = a || Ht,
+        this.d = s || this,
+        this.set = o || Gt,
+        this.pr = u || 0,
+        (this._next = t) && (t._prev = this)
+    }
+    ba(_t + "parent,duration,ease,delay,overwrite,runBackwards,startAt,yoyo,immediateRender,repeat,repeatDelay,data,paused,reversed,lazy,callbackScope,stringFilter,id,yoyoEase,stagger,inherit,repeatRefresh,keyframes,autoRevert,scrollTrigger", function(t) {
+        return ut[t] = 1
+    }),
+    ot.TweenMax = ot.TweenLite = Jt,
+    ot.TimelineLite = ot.TimelineMax = Nt,
+    I = new Nt({
+        sortChildren: !1,
+        defaults: L,
+        autoRemoveChildren: !0,
+        id: "root",
+        smoothChildTiming: !0
+    }),
+    Y.stringFilter = wb;
+    var se = {
+        registerPlugin: function registerPlugin() {
+            for (var t = arguments.length, e = new Array(t), r = 0; r < t; r++)
+                e[r] = arguments[r];
+            e.forEach(function(t) {
+                return function _createPlugin(t) {
+                    var e = (t = !t.name && t.default || t).name
+                      , r = p(t)
+                      , i = e && !r && t.init ? function() {
+                        this._props = []
+                    }
+                    : t
+                      , n = {
+                        init: Q,
