@@ -2067,3 +2067,134 @@
                 })
             },
             wrapYoyo: function wrapYoyo(e, t, r) {
+                var i = t - e
+                  , n = 2 * i;
+                return W(e) ? db(e, wrapYoyo(0, e.length - 1), t) : Oa(r, function(t) {
+                    return e + (i < (t = (n + (t - e) % n) % n || 0) ? n - t : t)
+                })
+            },
+            distribute: Ya,
+            random: _a,
+            snap: $a,
+            normalize: function normalize(t, e, r) {
+                return Ot(t, e, 0, 1, r)
+            },
+            getUnit: Qa,
+            clamp: function clamp(e, r, t) {
+                return Oa(t, function(t) {
+                    return Tt(e, r, t)
+                })
+            },
+            splitColor: rb,
+            toArray: xt,
+            selector: function selector(r) {
+                return r = xt(r)[0] || O("Invalid scope") || {},
+                function(t) {
+                    var e = r.current || r.nativeElement || r;
+                    return xt(t, e.querySelectorAll ? e : e === r ? O("Invalid scope") || a.createElement("div") : r)
+                }
+            },
+            mapRange: Ot,
+            pipe: function pipe() {
+                for (var t = arguments.length, e = new Array(t), r = 0; r < t; r++)
+                    e[r] = arguments[r];
+                return function(t) {
+                    return e.reduce(function(t, e) {
+                        return e(t)
+                    }, t)
+                }
+            },
+            unitize: function unitize(e, r) {
+                return function(t) {
+                    return e(parseFloat(t)) + (r || Qa(t))
+                }
+            },
+            interpolate: function interpolate(e, r, t, i) {
+                var n = isNaN(e + r) ? 0 : function(t) {
+                    return (1 - t) * e + t * r
+                }
+                ;
+                if (!n) {
+                    var a, s, u, h, l, f = o(e), d = {};
+                    if (!0 === t && (i = 1) && (t = null),
+                    f)
+                        e = {
+                            p: e
+                        },
+                        r = {
+                            p: r
+                        };
+                    else if (W(e) && !W(r)) {
+                        for (u = [],
+                        h = e.length,
+                        l = h - 2,
+                        s = 1; s < h; s++)
+                            u.push(interpolate(e[s - 1], e[s]));
+                        h--,
+                        n = function func(t) {
+                            t *= h;
+                            var e = Math.min(l, ~~t);
+                            return u[e](t - e)
+                        }
+                        ,
+                        t = r
+                    } else
+                        i || (e = mt(W(e) ? [] : {}, e));
+                    if (!u) {
+                        for (a in r)
+                            Yt.call(d, e, a, "get", r[a]);
+                        n = function func(t) {
+                            return ee(t, d) || (f ? e.p : e)
+                        }
+                    }
+                }
+                return Oa(t, n)
+            },
+            shuffle: Xa
+        },
+        install: M,
+        effects: dt,
+        ticker: St,
+        updateRoot: Nt.updateRoot,
+        plugins: ft,
+        globalTimeline: I,
+        core: {
+            PropTween: ae,
+            globals: P,
+            Tween: Jt,
+            Timeline: Nt,
+            Animation: qt,
+            getCache: _,
+            _removeLinkedListItem: ra,
+            suppressOverwrites: function suppressOverwrites(t) {
+                return R = t
+            }
+        }
+    };
+    ba("to,from,fromTo,delayedCall,set,killTweensOf", function(t) {
+        return se[t] = Jt[t]
+    }),
+    St.add(Nt.updateRoot),
+    d = se.to({}, {
+        duration: 0
+    });
+    function pc(t, e) {
+        for (var r = t._pt; r && r.p !== e && r.op !== e && r.fp !== e; )
+            r = r._next;
+        return r
+    }
+    function rc(t, n) {
+        return {
+            name: t,
+            rawVars: 1,
+            init: function init(t, i, e) {
+                e._onInit = function(t) {
+                    var e, r;
+                    if (o(i) && (e = {},
+                    ba(i, function(t) {
+                        return e[t] = 1
+                    }),
+                    i = e),
+                    n) {
+                        for (r in e = {},
+                        i)
