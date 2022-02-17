@@ -2853,3 +2853,65 @@
         },
         get: Cd,
         aliases: Ne,
+        getSetter: function getSetter(t, e, i) {
+            var n = Ne[e];
+            return n && n.indexOf(",") < 0 && (e = n),
+            e in Fe && e !== Ye && (t._gsap.x || Cd(t, "x")) ? i && pe === i ? "scale" === e ? jd : id : (pe = i || {}) && ("scale" === e ? kd : ld) : t.style && !r(t.style[e]) ? gd : ~e.indexOf("-") ? hd : Kt(t, e)
+        },
+        core: {
+            _removeProperty: yd,
+            _getMatrix: Md
+        }
+    };
+    oe.utils.checkPrefix = Xe,
+    sr = ba((nr = "x,y,z,scale,scaleX,scaleY,xPercent,yPercent") + "," + (ar = "rotation,rotationX,rotationY,skewX,skewY") + ",transform,transformOrigin,svgOrigin,force3D,smoothOrigin,transformPerspective", function(t) {
+        Fe[t] = 1
+    }),
+    ba(ar, function(t) {
+        Y.units[t] = "deg",
+        $e[t] = 1
+    }),
+    Ne[sr[13]] = nr + "," + ar,
+    ba("0:translateX,1:translateY,2:translateZ,8:rotate,8:rotationZ,8:rotateZ,9:rotateX,10:rotateY", function(t) {
+        var e = t.split(":");
+        Ne[e[1]] = sr[e[0]]
+    }),
+    ba("x,y,z,top,right,bottom,left,width,height,fontSize,padding,margin,perspective", function(t) {
+        Y.units[t] = "px"
+    }),
+    oe.registerPlugin(or);
+    var ur = oe.registerPlugin(or) || oe
+      , hr = ur.core.Tween;
+    e.Back = Ce,
+    e.Bounce = Ae,
+    e.CSSPlugin = or,
+    e.Circ = ze,
+    e.Cubic = we,
+    e.Elastic = ke,
+    e.Expo = De,
+    e.Linear = be,
+    e.Power0 = _e,
+    e.Power1 = me,
+    e.Power2 = ge,
+    e.Power3 = ve,
+    e.Power4 = ye,
+    e.Quad = Te,
+    e.Quart = xe,
+    e.Quint = Oe,
+    e.Sine = Se,
+    e.SteppedEase = Pe,
+    e.Strong = Me,
+    e.TimelineLite = Nt,
+    e.TimelineMax = Nt,
+    e.TweenLite = Jt,
+    e.TweenMax = hr,
+    e.default = ur,
+    e.gsap = ur;
+    if (typeof (window) === "undefined" || window !== e) {
+        Object.defineProperty(e, "__esModule", {
+            value: !0
+        })
+    } else {
+        delete e.default
+    }
+});
