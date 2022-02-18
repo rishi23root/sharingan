@@ -41,3 +41,84 @@ eyesvgCointainer.forEach((cointainer, index) => {
           </filter>
           <radialGradient id="paint0_radial_69_52" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(362 362.5) rotate(90) scale(355.5 355)">
               <stop offset="0.319792" />
+              <stop offset="0.473194" stop-color="#220000" stop-opacity="0" />
+              <stop offset="0.903125" stop-color="#1F1A1A" />
+          </radialGradient>
+        </defs>
+        </svg>
+        <path 
+          fill-rule="evenodd" 
+          id="starting${index}"
+          class="eyevector" 
+          d="${starting}"
+          fill="#000000"
+          stroke="#000000"  
+        />
+    </svg>
+    `
+})
+
+var eyeanimation = document.getElementsByClassName("eyevector");
+gsap.registerPlugin(MorphSVGPlugin);
+
+var tl = gsap.timeline({ delay: 1, defaults: { duration: .4 } })
+tl.to(eyeanimation, { morphSVG: middle1, delay: .5, duration: .5 }, "+=1")
+  .to(eyeanimation, { morphSVG: { shape: supperBig }, duration: .6 }, "+=1")
+  .to(eyeanimation, { morphSVG: middle2, delay: .5, duration: 1 }, "+=.5")
+  .to(eyeanimation, { morphSVG: starting }, "+=1");
+
+gsap.from('.eyecointainer', { duration: .5, opacity: 1, delay: 8 })
+
+
+function simple_eye() {
+  document.querySelectorAll('.eyevector').forEach(ele => {
+    ele.classList.add('simpleEye')
+  })
+}
+
+
+function getdigree(angle, by = 10) {
+  angle -= by
+  if (angle < 0) {
+    angle = 360
+  }
+  return angle
+}
+
+
+function letRotate() {
+  let angle = 0;
+  let by = 0;
+  let timelineSec = [1000, 2000, 1000, 2500, 1500, 500]
+  //               [ 0    , 5 ,   15,  5   , 0]
+  setTimeout(() => {
+    setTimeout(() => {
+      by = 5
+      setTimeout(() => {
+        by = 15
+        setTimeout(() => {
+          by = 3
+          setTimeout(() => {
+            by = 0
+          }, timelineSec[4]);
+        }, timelineSec[3]);
+      }, timelineSec[2]);
+    }, timelineSec[1]);
+  }, timelineSec[0]);
+
+  document.querySelectorAll('.commaRotateit').forEach(ele => {
+    const timeout = setInterval(() => {
+      angle = getdigree(angle, by)
+      ele.setAttribute("transform", `rotate(${angle})`);
+    }, 90);
+
+    setTimeout(() => {
+      clearInterval(timeout)
+    }, 8000);
+  })
+}
+
+simple_eye()
+letRotate()
+
+// thanks to gsap and findShapeIndex lib 
