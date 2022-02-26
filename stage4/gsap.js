@@ -406,3 +406,134 @@
         a = p[2] / kt,
         u = ((h = Math.max(i, n, a)) + (l = Math.min(i, n, a))) / 2,
         h === l ? s = o = 0 : (f = h - l,
+        o = .5 < u ? f / (2 - h - l) : f / (h + l),
+        s = h === i ? (n - a) / f + (n < a ? 6 : 0) : h === n ? (a - i) / f + 2 : (i - n) / f + 4,
+        s *= 60),
+        p[0] = ~~(s + .5),
+        p[1] = ~~(100 * o + .5),
+        p[2] = ~~(100 * u + .5)),
+        r && p.length < 4 && (p[3] = 1),
+        p
+    }
+    function sb(t) {
+        var r = []
+          , i = []
+          , n = -1;
+        return t.split(Pt).forEach(function(t) {
+            var e = t.match(rt) || [];
+            r.push.apply(r, e),
+            i.push(n += e.length + 1)
+        }),
+        r.c = i,
+        r
+    }
+    function tb(t, e, r) {
+        var i, n, a, s, o = "", u = (t + o).match(Pt), h = e ? "hsla(" : "rgba(", l = 0;
+        if (!u)
+            return t;
+        if (u = u.map(function(t) {
+            return (t = rb(t, e, 1)) && h + (e ? t[0] + "," + t[1] + "%," + t[2] + "%," + t[3] : t.join(",")) + ")"
+        }),
+        r && (a = sb(t),
+        (i = r.c).join(o) !== a.c.join(o)))
+            for (s = (n = t.replace(Pt, "1").split(rt)).length - 1; l < s; l++)
+                o += n[l] + (~i.indexOf(l) ? u.shift() || h + "0,0,0,0)" : (a.length ? a : u.length ? u : r).shift());
+        if (!n)
+            for (s = (n = t.split(Pt)).length - 1; l < s; l++)
+                o += n[l] + u[l];
+        return o + n[s]
+    }
+    function wb(t) {
+        var e, r = t.join(" ");
+        if (Pt.lastIndex = 0,
+        Pt.test(r))
+            return e = At.test(r),
+            t[1] = tb(t[1], e),
+            t[0] = tb(t[0], e, sb(t[1])),
+            !0
+    }
+    function Fb(t) {
+        var e = (t + "").split("(")
+          , r = zt[e[0]];
+        return r && 1 < e.length && r.config ? r.config.apply(null, ~t.indexOf("{") ? [function _parseObjectInString(t) {
+            for (var e, r, i, n = {}, a = t.substr(1, t.length - 3).split(":"), s = a[0], o = 1, u = a.length; o < u; o++)
+                r = a[o],
+                e = o !== u - 1 ? r.lastIndexOf(",") : r.length,
+                i = r.substr(0, e),
+                n[s] = isNaN(i) ? i.replace(Et, "").trim() : +i,
+                s = r.substr(e + 1).trim();
+            return n
+        }(e[1])] : function _valueInParentheses(t) {
+            var e = t.indexOf("(") + 1
+              , r = t.indexOf(")")
+              , i = t.indexOf("(", e);
+            return t.substring(e, ~i && i < r ? t.indexOf(")", r + 1) : r)
+        }(t).split(",").map(ha)) : zt._CE && Ft.test(t) ? zt._CE("", t) : r
+    }
+    function Hb(t, e) {
+        for (var r, i = t._first; i; )
+            i instanceof Nt ? Hb(i, e) : !i.vars.yoyoEase || i._yoyo && i._repeat || i._yoyo === e || (i.timeline ? Hb(i.timeline, e) : (r = i._ease,
+            i._ease = i._yEase,
+            i._yEase = r,
+            i._yoyo = e)),
+            i = i._next
+    }
+    function Jb(t, e, r, i) {
+        void 0 === r && (r = function easeOut(t) {
+            return 1 - e(1 - t)
+        }
+        ),
+        void 0 === i && (i = function easeInOut(t) {
+            return t < .5 ? e(2 * t) / 2 : 1 - e(2 * (1 - t)) / 2
+        }
+        );
+        var n, a = {
+            easeIn: e,
+            easeOut: r,
+            easeInOut: i
+        };
+        return ba(t, function(t) {
+            for (var e in zt[t] = ot[t] = a,
+            zt[n = t.toLowerCase()] = r,
+            a)
+                zt[n + ("easeIn" === e ? ".in" : "easeOut" === e ? ".out" : ".inOut")] = zt[t + "." + e] = a[e]
+        }),
+        a
+    }
+    function Kb(e) {
+        return function(t) {
+            return t < .5 ? (1 - e(1 - 2 * t)) / 2 : .5 + e(2 * (t - .5)) / 2
+        }
+    }
+    function Lb(r, t, e) {
+        function Sl(t) {
+            return 1 === t ? 1 : i * Math.pow(2, -10 * t) * K((t - a) * n) + 1
+        }
+        var i = 1 <= t ? t : 1
+          , n = (e || (r ? .3 : .45)) / (t < 1 ? t : 1)
+          , a = n / U * (Math.asin(1 / i) || 0)
+          , s = "out" === r ? Sl : "in" === r ? function(t) {
+            return 1 - Sl(1 - t)
+        }
+        : Kb(Sl);
+        return n = U / n,
+        s.config = function(t, e) {
+            return Lb(r, t, e)
+        }
+        ,
+        s
+    }
+    function Mb(e, r) {
+        function $l(t) {
+            return t ? --t * t * ((r + 1) * t + r) + 1 : 0
+        }
+        void 0 === r && (r = 1.70158);
+        var t = "out" === e ? $l : "in" === e ? function(t) {
+            return 1 - $l(1 - t)
+        }
+        : Kb($l);
+        return t.config = function(t) {
+            return Mb(e, t)
+        }
+        ,
+        t
