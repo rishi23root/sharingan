@@ -1192,3 +1192,134 @@
             for (var e = this.getChildren(1, 1, 1), r = e.length; r--; )
                 if (e[r].vars.id === t)
                     return e[r]
+        }
+        ,
+        e.remove = function remove(t) {
+            return o(t) ? this.removeLabel(t) : p(t) ? this.killTweensOf(t) : (ra(this, t),
+            t === this._recent && (this._recent = this._last),
+            ta(this))
+        }
+        ,
+        e.totalTime = function totalTime(t, e) {
+            return arguments.length ? (this._forcing = 1,
+            !this._dp && this._ts && (this._start = da(St.time - (0 < this._ts ? t / this._ts : (this.totalDuration() - t) / -this._ts))),
+            n.prototype.totalTime.call(this, t, e),
+            this._forcing = 0,
+            this) : this._tTime
+        }
+        ,
+        e.addLabel = function addLabel(t, e) {
+            return this.labels[t] = bt(this, e),
+            this
+        }
+        ,
+        e.removeLabel = function removeLabel(t) {
+            return delete this.labels[t],
+            this
+        }
+        ,
+        e.addPause = function addPause(t, e, r) {
+            var i = Jt.delayedCall(0, e || Q, r);
+            return i.data = "isPause",
+            this._hasPause = 1,
+            Ca(this, i, bt(this, t))
+        }
+        ,
+        e.removePause = function removePause(t) {
+            var e = this._first;
+            for (t = bt(this, t); e; )
+                e._start === t && "isPause" === e.data && sa(e),
+                e = e._next
+        }
+        ,
+        e.killTweensOf = function killTweensOf(t, e, r) {
+            for (var i = this.getTweensOf(t, r), n = i.length; n--; )
+                Qt !== i[n] && i[n].kill(t, e);
+            return this
+        }
+        ,
+        e.getTweensOf = function getTweensOf(t, e) {
+            for (var r, i = [], n = xt(t), a = this._first, s = q(e); a; )
+                a instanceof Jt ? ea(a._targets, n) && (s ? (!Qt || a._initted && a._ts) && a.globalTime(0) <= e && a.globalTime(a.totalDuration()) > e : !e || a.isActive()) && i.push(a) : (r = a.getTweensOf(n, e)).length && i.push.apply(i, r),
+                a = a._next;
+            return i
+        }
+        ,
+        e.tweenTo = function tweenTo(t, e) {
+            e = e || {};
+            var r, i = this, n = bt(i, t), a = e.startAt, s = e.onStart, o = e.onStartParams, u = e.immediateRender, h = Jt.to(i, ja({
+                ease: e.ease || "none",
+                lazy: !1,
+                immediateRender: !1,
+                time: n,
+                overwrite: "auto",
+                duration: e.duration || Math.abs((n - (a && "time"in a ? a.time : i._time)) / i.timeScale()) || X,
+                onStart: function onStart() {
+                    if (i.pause(),
+                    !r) {
+                        var t = e.duration || Math.abs((n - (a && "time"in a ? a.time : i._time)) / i.timeScale());
+                        h._dur !== t && Ja(h, t, 0, 1).render(h._time, !0, !0),
+                        r = 1
+                    }
+                    s && s.apply(h, o || [])
+                }
+            }, e));
+            return u ? h.render(0) : h
+        }
+        ,
+        e.tweenFromTo = function tweenFromTo(t, e, r) {
+            return this.tweenTo(e, ja({
+                startAt: {
+                    time: bt(this, t)
+                }
+            }, r))
+        }
+        ,
+        e.recent = function recent() {
+            return this._recent
+        }
+        ,
+        e.nextLabel = function nextLabel(t) {
+            return void 0 === t && (t = this._time),
+            jb(this, bt(this, t))
+        }
+        ,
+        e.previousLabel = function previousLabel(t) {
+            return void 0 === t && (t = this._time),
+            jb(this, bt(this, t), 1)
+        }
+        ,
+        e.currentLabel = function currentLabel(t) {
+            return arguments.length ? this.seek(t, !0) : this.previousLabel(this._time + X)
+        }
+        ,
+        e.shiftChildren = function shiftChildren(t, e, r) {
+            void 0 === r && (r = 0);
+            for (var i, n = this._first, a = this.labels; n; )
+                n._start >= r && (n._start += t,
+                n._end += t),
+                n = n._next;
+            if (e)
+                for (i in a)
+                    a[i] >= r && (a[i] += t);
+            return ta(this)
+        }
+        ,
+        e.invalidate = function invalidate() {
+            var t = this._first;
+            for (this._lock = 0; t; )
+                t.invalidate(),
+                t = t._next;
+            return n.prototype.invalidate.call(this)
+        }
+        ,
+        e.clear = function clear(t) {
+            void 0 === t && (t = !0);
+            for (var e, r = this._first; r; )
+                e = r._next,
+                this.remove(r),
+                r = e;
+            return this._dp && (this._time = this._tTime = this._pTime = 0),
+            t && (this.labels = {}),
+            ta(this)
+        }
