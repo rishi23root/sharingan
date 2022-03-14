@@ -2502,3 +2502,134 @@
         var s, u, h = 360, l = o(n), f = parseFloat(n) * (l && ~n.indexOf("rad") ? Ee : 1), d = a ? f * a : f - i, p = i + d + "deg";
         return l && ("short" === (s = n.split("_")[1]) && (d %= h) !== d % 180 && (d += d < 0 ? h : -h),
         "cw" === s && d < 0 ? d = (d + 36e9) % h - ~~(d / h) * h : "ccw" === s && 0 < d && (d = (d - 36e9) % h - ~~(d / h) * h)),
+        t._pt = u = new ae(t._pt,e,r,i,d,bd),
+        u.e = p,
+        u.u = "deg",
+        t._props.push(r),
+        u
+    }
+    function Yd(t, e) {
+        for (var r in e)
+            t[r] = e[r];
+        return t
+    }
+    function Zd(t, e, r) {
+        var i, n, a, s, o, u, h, l = Yd({}, r._gsap), f = r.style;
+        for (n in l.svg ? (a = r.getAttribute("transform"),
+        r.setAttribute("transform", ""),
+        f[Qe] = e,
+        i = Ze(r, 1),
+        yd(r, Qe),
+        r.setAttribute("transform", a)) : (a = getComputedStyle(r)[Qe],
+        f[Qe] = e,
+        i = Ze(r, 1),
+        f[Qe] = a),
+        Fe)
+            (a = l[n]) !== (s = i[n]) && "perspective,force3D,transformOrigin,svgOrigin".indexOf(n) < 0 && (o = Qa(a) !== (h = Qa(s)) ? Bd(r, n, a, h) : parseFloat(a),
+            u = parseFloat(s),
+            t._pt = new ae(t._pt,i,n,o,u - o,ad),
+            t._pt.u = h || 0,
+            t._props.push(n));
+        Yd(i, l)
+    }
+    var ue, he, le, fe, de, pe, ce, _e = zt.Power0, me = zt.Power1, ge = zt.Power2, ve = zt.Power3, ye = zt.Power4, be = zt.Linear, Te = zt.Quad, we = zt.Cubic, xe = zt.Quart, Oe = zt.Quint, Me = zt.Strong, ke = zt.Elastic, Ce = zt.Back, Pe = zt.SteppedEase, Ae = zt.Bounce, Se = zt.Sine, De = zt.Expo, ze = zt.Circ, Fe = {}, Ee = 180 / Math.PI, Be = Math.PI / 180, Re = Math.atan2, Ie = /([A-Z])/g, Le = /(?:left|right|width|margin|padding|x)/i, qe = /[\s,\(]\S/, Ne = {
+        autoAlpha: "opacity,visibility",
+        scale: "scaleX,scaleY",
+        alpha: "opacity"
+    }, Qe = "transform", Ye = Qe + "Origin", je = "O,Moz,ms,Ms,Webkit".split(","), Xe = function _checkPropPrefix(t, e, r) {
+        var i = (e || de).style
+          , n = 5;
+        if (t in i && !r)
+            return t;
+        for (t = t.charAt(0).toUpperCase() + t.substr(1); n-- && !(je[n] + t in i); )
+            ;
+        return n < 0 ? null : (3 === n ? "ms" : 0 <= n ? je[n] : "") + t
+    }, Ue = {
+        deg: 1,
+        rad: 1,
+        turn: 1
+    }, Ve = {
+        top: "0%",
+        bottom: "100%",
+        left: "0%",
+        right: "100%",
+        center: "50%"
+    }, Je = {
+        clearProps: function clearProps(t, e, r, i, n) {
+            if ("isFromStart" !== n.data) {
+                var a = t._pt = new ae(t._pt,e,r,0,0,Gd);
+                return a.u = i,
+                a.pr = -10,
+                a.tween = n,
+                t._props.push(r),
+                1
+            }
+        }
+    }, Ge = [1, 0, 0, 1, 0, 0], $e = {}, Ze = function _parseTransform(t, e) {
+        var r = t._gsap || new Lt(t);
+        if ("x"in r && !e && !r.uncache)
+            return r;
+        var i, n, a, s, o, u, h, l, f, d, p, c, _, m, g, v, y, b, T, w, x, O, M, k, C, P, A, S, D, z, F, E, B = t.style, R = r.scaleX < 0, I = "deg", L = qd(t, Ye) || "0";
+        return i = n = a = u = h = l = f = d = p = 0,
+        s = o = 1,
+        r.svg = !(!t.getCTM || !xd(t)),
+        m = Md(t, r.svg),
+        r.svg && (k = (!r.uncache || "0px 0px" === L) && !e && t.getAttribute("data-svg-origin"),
+        Nd(t, k || L, !!k || r.originIsAbsolute, !1 !== r.smooth, m)),
+        c = r.xOrigin || 0,
+        _ = r.yOrigin || 0,
+        m !== Ge && (b = m[0],
+        T = m[1],
+        w = m[2],
+        x = m[3],
+        i = O = m[4],
+        n = M = m[5],
+        6 === m.length ? (s = Math.sqrt(b * b + T * T),
+        o = Math.sqrt(x * x + w * w),
+        u = b || T ? Re(T, b) * Ee : 0,
+        (f = w || x ? Re(w, x) * Ee + u : 0) && (o *= Math.abs(Math.cos(f * Be))),
+        r.svg && (i -= c - (c * b + _ * w),
+        n -= _ - (c * T + _ * x))) : (E = m[6],
+        z = m[7],
+        A = m[8],
+        S = m[9],
+        D = m[10],
+        F = m[11],
+        i = m[12],
+        n = m[13],
+        a = m[14],
+        h = (g = Re(E, D)) * Ee,
+        g && (k = O * (v = Math.cos(-g)) + A * (y = Math.sin(-g)),
+        C = M * v + S * y,
+        P = E * v + D * y,
+        A = O * -y + A * v,
+        S = M * -y + S * v,
+        D = E * -y + D * v,
+        F = z * -y + F * v,
+        O = k,
+        M = C,
+        E = P),
+        l = (g = Re(-w, D)) * Ee,
+        g && (v = Math.cos(-g),
+        F = x * (y = Math.sin(-g)) + F * v,
+        b = k = b * v - A * y,
+        T = C = T * v - S * y,
+        w = P = w * v - D * y),
+        u = (g = Re(T, b)) * Ee,
+        g && (k = b * (v = Math.cos(g)) + T * (y = Math.sin(g)),
+        C = O * v + M * y,
+        T = T * v - b * y,
+        M = M * v - O * y,
+        b = k,
+        O = C),
+        h && 359.9 < Math.abs(h) + Math.abs(u) && (h = u = 0,
+        l = 180 - l),
+        s = ca(Math.sqrt(b * b + T * T + w * w)),
+        o = ca(Math.sqrt(M * M + E * E)),
+        g = Re(O, M),
+        f = 2e-4 < Math.abs(g) ? g * Ee : 0,
+        p = F ? 1 / (F < 0 ? -F : F) : 0),
+        r.svg && (k = t.getAttribute("transform"),
+        r.forceCSS = t.setAttribute("transform", "") || !Kd(qd(t, Qe)),
+        k && t.setAttribute("transform", k))),
+        90 < Math.abs(f) && Math.abs(f) < 270 && (R ? (s *= -1,
