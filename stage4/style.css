@@ -108,3 +108,8 @@ body {
   background-color: rgb(195, 172, 214);
 }
 
+.rinneganItself,
+.sharinganItself {
+  position: inherit;
+
+}
