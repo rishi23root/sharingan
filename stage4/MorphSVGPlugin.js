@@ -448,3 +448,24 @@
                 return ca(i, r, o), i
             },
             pathFilter: ca,
+            pointsFilter: fa,
+            getTotalSize: U,
+            equalizeSegmentQuantity: ba,
+            convertToPath: function convertToPath$1(t, e) {
+                return j(t).map(function (t) {
+                    return convertToPath(t, !1 !== e)
+                })
+            },
+            defaultType: "linear",
+            defaultUpdateTarget: !0,
+            defaultMap: "size"
+        };
+    y() && o.registerPlugin(K), t.MorphSVGPlugin = K, t.default = K;
+    if (typeof (window) === "undefined" || window !== t) {
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        })
+    } else {
+        delete t.default
+    }
+});
